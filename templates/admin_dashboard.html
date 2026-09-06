@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FoodCourt | Admin Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/admin_dashboard.css') }}">
+</head>
+
+<body>
+
+<!-- ================= SIDEBAR ================= -->
+
+<aside class="sidebar">
+
+    <div class="brand">
+        <div class="brand-icon">🍴</div>
+
+        <div>
+            <h2>FOOD<span>COURT</span></h2>
+            <small>ADMIN PANEL</small>
+        </div>
+    </div>
+
+
+   <nav class="sidebar-menu">
+
+    <a href="/admin-dashboard" class="menu-item active">
+        <span class="menu-icon">📊</span>
+        <span>Dashboard</span>
+    </a>
+
+    <a href="/admin-food" class="menu-item">
+        <span class="menu-icon">🍔</span>
+        <span>Food Management</span>
+    </a>
+
+    <a href="/admin-orders" class="menu-item">
+        <span class="menu-icon">📦</span>
+        <span>Orders</span>
+    </a>
+
+    <a href="/admin-users" class="menu-item">
+        <span class="menu-icon">👥</span>
+        <span>Users</span>
+    </a>
+
+    <a href="/sales-analytics" class="menu-item">
+        <span class="menu-icon">📈</span>
+        <span>Sales Analytics</span>
+    </a>
+
+</nav>
+    <div class="sidebar-bottom">
+
+        <div class="admin-mini">
+            <div class="admin-avatar">A</div>
+
+            <div>
+                <strong>Administrator</strong>
+                <small>Food Court Admin</small>
+            </div>
+        </div>
+
+        <a href="/logout" class="logout-btn">
+            🚪 Logout
+        </a>
+
+    </div>
+
+</aside>
+
+
+<!-- ================= MAIN CONTENT ================= -->
+
+<main class="main-content">
+
+    <!-- TOP BAR -->
+
+    <header class="topbar">
+
+        <div>
+            <p class="page-label">ADMIN PANEL</p>
+            <h1>Dashboard</h1>
+        </div>
+
+        <div class="top-right">
+
+            <div class="date-box">
+                📅
+                <span id="currentDate"></span>
+            </div>
+
+            <div class="notification">
+                🔔
+                <span class="notification-dot"></span>
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- WELCOME -->
+
+    <section class="welcome-box">
+
+        <div class="welcome-text">
+
+            <span class="welcome-tag">WELCOME BACK 👋</span>
+
+            <h2>Hello, Administrator!</h2>
+
+            <p>
+                Here's what's happening in your campus food court today.
+            </p>
+
+        </div>
+
+        <div class="welcome-food">
+            🍔
+        </div>
+
+    </section>
+
+
+    <!-- ================= STATISTICS ================= -->
+
+    <section class="stats-grid">
+
+        <div class="stat-card">
+
+            <div class="stat-icon orange">
+                👥
+            </div>
+
+            <div class="stat-info">
+                <span>Total Users</span>
+                <h2>{{ user_count }}</h2>
+                <small>Registered students</small>
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon yellow">
+                🍔
+            </div>
+
+            <div class="stat-info">
+                <span>Food Items</span>
+                <h2>{{ food_count }}</h2>
+                <small>Available food items</small>
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon green">
+                📦
+            </div>
+
+            <div class="stat-info">
+                <span>Total Orders</span>
+                <h2>{{ order_count }}</h2>
+                <small>Orders received</small>
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon purple">
+                ₹
+            </div>
+
+            <div class="stat-info">
+                <span>Total Revenue</span>
+                <h2>₹{{ "%.0f"|format(total_revenue) }}</h2>
+                <small>From all orders</small>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= LOWER SECTION ================= -->
+
+    <section class="dashboard-grid">
+
+
+        <!-- RECENT ORDERS -->
+
+        <div class="panel orders-panel">
+
+            <div class="panel-header">
+
+                <div>
+                    <span class="panel-label">ORDERS</span>
+                    <h2>Recent Orders</h2>
+                </div>
+
+                <a href="/admin-orders" class="view-all">
+                    View All →
+                </a>
+
+            </div>
+
+
+            {% if recent_orders %}
+
+            <div class="order-list">
+
+                {% for order in recent_orders %}
+
+                <div class="order-row">
+
+                    <div class="order-number">
+                        <strong>#{{ order["id"] }}</strong>
+                        <small>{{ order["order_date"] }}</small>
+                    </div>
+
+                    <div class="order-user">
+                        <div class="user-circle">
+                            {{ order["full_name"][0]|upper }}
+                        </div>
+
+                        <span>{{ order["full_name"] }}</span>
+                    </div>
+
+                    <div class="order-price">
+                        ₹{{ "%.0f"|format(order["total_amount"]) }}
+                    </div>
+
+                    <div class="status {{ order['status']|lower|replace(' ', '-') }}">
+                        {{ order["status"] }}
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+            {% else %}
+
+            <div class="empty-orders">
+                <div>📦</div>
+                <h3>No orders yet</h3>
+                <p>New customer orders will appear here.</p>
+            </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- QUICK ACTIONS -->
+
+        <div class="panel quick-panel">
+
+            <div class="panel-header">
+
+                <div>
+                    <span class="panel-label">MANAGEMENT</span>
+                    <h2>Quick Actions</h2>
+                </div>
+
+            </div>
+
+
+            <div class="quick-actions">
+
+                <a href="/admin-food" class="quick-card">
+
+                    <div class="quick-icon orange-bg">
+                        🍔
+                    </div>
+
+                    <div>
+                        <strong>Manage Food</strong>
+                        <span>Add, edit or remove food</span>
+                    </div>
+
+                    <b>→</b>
+
+                </a>
+
+
+                <a href="/admin-add-food" class="quick-card">
+
+                    <div class="quick-icon green-bg">
+                        +
+                    </div>
+
+                    <div>
+                        <strong>Add New Food</strong>
+                        <span>Add an item to the menu</span>
+                    </div>
+
+                    <b>→</b>
+
+                </a>
+
+
+                <a href="/admin-orders" class="quick-card">
+
+                    <div class="quick-icon blue-bg">
+                        📦
+                    </div>
+
+                    <div>
+                        <strong>View Orders</strong>
+                        <span>Manage customer orders</span>
+                    </div>
+
+                    <b>→</b>
+
+                </a>
+
+
+                <a href="/admin-users" class="quick-card">
+
+                    <div class="quick-icon purple-bg">
+                        👥
+                    </div>
+
+                    <div>
+                        <strong>View Users</strong>
+                        <span>Manage registered students</span>
+                    </div>
+
+                    <b>→</b>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <span>© 2026 FoodCourt Admin Panel</span>
+
+        <span>
+            Campus Food Management System
+        </span>
+
+    </footer>
+
+</main>
+
+
+<script>
+
+    // Current date
+
+    const dateElement = document.getElementById("currentDate");
+
+    const today = new Date();
+
+    dateElement.textContent = today.toLocaleDateString(
+        "en-IN",
+        {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        }
+    );
+
+
+    // Small animation when statistics appear
+
+    const cards = document.querySelectorAll(".stat-card");
+
+    cards.forEach((card, index) => {
+
+        card.style.animationDelay = `${index * 0.08}s`;
+
+    });
+
+</script>
+
+</body>
+</html>

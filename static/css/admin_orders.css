@@ -1,0 +1,647 @@
+/* =========================================
+   ADMIN ORDERS PAGE
+========================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f7f8fa;
+    color: #374151;
+}
+
+.admin-layout {
+    min-height: 100vh;
+    display: flex;
+}
+
+/* =========================================
+   SIDEBAR
+========================================= */
+
+.sidebar {
+    width: 250px;
+    min-height: 100vh;
+    background: #1f2937;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+}
+
+.brand {
+    height: 85px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid #374151;
+}
+
+.brand-icon {
+    width: 43px;
+    height: 43px;
+    background: #f97316;
+    border-radius: 11px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 21px;
+}
+
+.brand h2 {
+    color: white;
+    font-size: 18px;
+    margin-bottom: 3px;
+}
+
+.brand span {
+    color: #9ca3af;
+    font-size: 12px;
+}
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
+.sidebar-nav {
+    padding: 25px 14px;
+}
+
+.sidebar-nav a {
+    height: 48px;
+    padding: 0 15px;
+    margin-bottom: 8px;
+
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    color: #d1d5db;
+    text-decoration: none;
+
+    border-radius: 9px;
+
+    transition: all 0.25s ease;
+}
+
+.sidebar-nav a:hover {
+    background: #374151;
+    color: white;
+}
+
+.sidebar-nav a.active {
+    background: #f97316;
+    color: white;
+}
+
+.nav-icon {
+    width: 22px;
+    text-align: center;
+}
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+.sidebar-bottom {
+    margin-top: auto;
+    padding: 15px;
+    border-top: 1px solid #374151;
+}
+
+.logout-link {
+    height: 45px;
+    padding: 0 15px;
+
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    color: #d1d5db;
+    text-decoration: none;
+
+    border-radius: 9px;
+
+    transition: 0.25s;
+}
+
+.logout-link:hover {
+    background: #374151;
+    color: white;
+}
+
+/* =========================================
+   MAIN CONTENT
+========================================= */
+
+.main-content {
+    width: calc(100% - 250px);
+    margin-left: 250px;
+    padding: 35px;
+}
+
+/* =========================================
+   TOPBAR
+========================================= */
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 28px;
+}
+
+.topbar h1 {
+    color: #1f2937;
+    font-size: 30px;
+    margin-bottom: 6px;
+}
+
+.topbar p {
+    color: #6b7280;
+    font-size: 14px;
+}
+
+/* =========================================
+   ADMIN PROFILE
+========================================= */
+
+.admin-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.admin-avatar {
+    width: 42px;
+    height: 42px;
+
+    background: #fff7ed;
+    color: #f97316;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 18px;
+}
+
+.admin-profile-text strong {
+    display: block;
+    color: #1f2937;
+    font-size: 14px;
+}
+
+.admin-profile-text span {
+    color: #9ca3af;
+    font-size: 12px;
+}
+
+/* =========================================
+   ORDERS HEADER
+========================================= */
+
+.page-header {
+    margin-bottom: 22px;
+}
+
+.page-header h2 {
+    color: #1f2937;
+    font-size: 23px;
+    margin-bottom: 5px;
+}
+
+.page-header p {
+    color: #6b7280;
+    font-size: 13px;
+}
+
+/* =========================================
+   FILTER SECTION
+========================================= */
+
+.filters {
+    background: white;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+
+    padding: 18px;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    margin-bottom: 20px;
+}
+
+.search-box {
+    position: relative;
+    flex: 1;
+}
+
+.search-box span {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    font-size: 16px;
+}
+
+.search-box input {
+    width: 100%;
+
+    height: 44px;
+
+    padding: 0 15px 0 42px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+
+    outline: none;
+
+    font-size: 14px;
+    color: #374151;
+
+    transition: 0.25s;
+}
+
+.search-box input:focus {
+    border-color: #f97316;
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.10);
+}
+
+.search-box input::placeholder {
+    color: #9ca3af;
+}
+
+/* STATUS FILTER */
+
+.status-filter {
+    height: 44px;
+
+    min-width: 160px;
+
+    padding: 0 13px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+
+    background: white;
+
+    color: #374151;
+
+    font-size: 14px;
+
+    outline: none;
+
+    cursor: pointer;
+}
+
+.status-filter:focus {
+    border-color: #f97316;
+}
+
+/* =========================================
+   ORDERS TABLE
+========================================= */
+
+.orders-card {
+    background: white;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+
+    overflow: hidden;
+}
+
+.orders-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.orders-table thead {
+    background: #fafafa;
+}
+
+.orders-table th {
+    padding: 16px 18px;
+
+    text-align: left;
+
+    color: #6b7280;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.5px;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.orders-table td {
+    padding: 18px;
+
+    font-size: 13px;
+
+    border-bottom: 1px solid #f0f0f0;
+
+    vertical-align: middle;
+}
+
+.orders-table tbody tr {
+    transition: background 0.2s ease;
+}
+
+.orders-table tbody tr:hover {
+    background: #fffaf5;
+}
+
+.orders-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* =========================================
+   ORDER ID
+========================================= */
+
+.order-id {
+    color: #1f2937;
+    font-weight: 700;
+}
+
+/* =========================================
+   CUSTOMER
+========================================= */
+
+.customer-info {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.customer-avatar {
+    width: 38px;
+    height: 38px;
+
+    flex-shrink: 0;
+
+    background: #fff7ed;
+    color: #ea580c;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.customer-details strong {
+    display: block;
+
+    color: #1f2937;
+
+    font-size: 13px;
+
+    margin-bottom: 3px;
+}
+
+.customer-details span {
+    display: block;
+
+    color: #9ca3af;
+
+    font-size: 11px;
+}
+
+/* =========================================
+   DATE
+========================================= */
+
+.order-date {
+    color: #6b7280;
+    line-height: 1.5;
+}
+
+/* =========================================
+   TOTAL
+========================================= */
+
+.order-total {
+    color: #1f2937;
+    font-weight: 700;
+}
+
+/* =========================================
+   STATUS BADGES
+========================================= */
+
+.status-badge {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 6px 12px;
+
+    border-radius: 20px;
+
+    font-size: 11px;
+
+    font-weight: 700;
+}
+
+.status-badge.placed {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.status-badge.preparing {
+    background: #fff7ed;
+    color: #ea580c;
+}
+
+.status-badge.ready {
+    background: #fefce8;
+    color: #ca8a04;
+}
+
+.status-badge.completed {
+    background: #f0fdf4;
+    color: #16a34a;
+}
+
+.status-badge.cancelled {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+/* =========================================
+   VIEW BUTTON
+========================================= */
+
+.view-btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 8px 13px;
+
+    background: #fff7ed;
+    color: #ea580c;
+
+    border: 1px solid #fed7aa;
+
+    border-radius: 7px;
+
+    text-decoration: none;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    transition: all 0.25s ease;
+}
+
+.view-btn:hover {
+    background: #f97316;
+    color: white;
+
+    border-color: #f97316;
+
+    transform: translateY(-1px);
+}
+
+/* =========================================
+   NO RESULTS
+========================================= */
+
+.no-results {
+    display: none;
+
+    padding: 50px 20px;
+
+    text-align: center;
+}
+
+.no-results-icon {
+    font-size: 40px;
+    margin-bottom: 12px;
+}
+
+.no-results h3 {
+    color: #374151;
+    font-size: 17px;
+    margin-bottom: 5px;
+}
+
+.no-results p {
+    color: #9ca3af;
+    font-size: 13px;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1000px) {
+
+    .main-content {
+        padding: 25px;
+    }
+
+    .orders-card {
+        overflow-x: auto;
+    }
+
+    .orders-table {
+        min-width: 800px;
+    }
+}
+
+@media (max-width: 700px) {
+
+    .sidebar {
+        width: 70px;
+    }
+
+    .brand {
+        justify-content: center;
+        padding: 15px 10px;
+    }
+
+    .brand-text {
+        display: none;
+    }
+
+    .sidebar-nav a,
+    .logout-link {
+        justify-content: center;
+        padding: 0;
+    }
+
+    .sidebar-nav a span:last-child,
+    .logout-link span:last-child {
+        display: none;
+    }
+
+    .main-content {
+        width: calc(100% - 70px);
+        margin-left: 70px;
+        padding: 20px;
+    }
+
+    .topbar {
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .admin-profile {
+        display: none;
+    }
+
+    .filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .status-filter {
+        width: 100%;
+    }
+}
+
+@media (max-width: 450px) {
+
+    .main-content {
+        padding: 15px;
+    }
+
+    .topbar h1 {
+        font-size: 25px;
+    }
+
+    .page-header h2 {
+        font-size: 20px;
+    }
+}

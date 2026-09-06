@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Checkout | Food Court</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+        body {
+            background: #f7f3ee;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: #3e2723;
+        }
+
+        .checkout-container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 40px auto;
+        }
+
+        .checkout-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .checkout-title h1 {
+            margin-bottom: 8px;
+            color: #4e342e;
+        }
+
+        .checkout-title p {
+            color: #777;
+        }
+
+        .checkout-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 25px;
+        }
+
+        .checkout-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .checkout-card h2 {
+            margin-top: 0;
+            color: #5d4037;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .item-info h3 {
+            margin: 0 0 5px;
+            font-size: 17px;
+        }
+
+        .item-info p {
+            margin: 0;
+            color: #777;
+            font-size: 14px;
+        }
+
+        .item-price {
+            font-weight: bold;
+            color: #5d4037;
+        }
+
+        .total-section {
+            margin-top: 20px;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 12px 0;
+        }
+
+        .grand-total {
+            border-top: 2px solid #eee;
+            padding-top: 15px;
+            font-size: 21px;
+            font-weight: bold;
+            color: #3e2723;
+        }
+
+        .payment-option {
+            display: block;
+            border: 2px solid #eee;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 12px 0;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .payment-option:hover {
+            border-color: #8d6e63;
+            background: #faf7f4;
+        }
+
+        .payment-option input {
+            margin-right: 10px;
+        }
+
+        .payment-name {
+            font-weight: bold;
+        }
+
+        .payment-description {
+            display: block;
+            margin-left: 25px;
+            margin-top: 5px;
+            color: #777;
+            font-size: 13px;
+        }
+
+        .pay-button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: #6d4c41;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .pay-button:hover {
+            background: #4e342e;
+        }
+
+        .back-cart {
+            display: inline-block;
+            margin-top: 20px;
+            color: #6d4c41;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .checkout-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="checkout-container">
+
+    <div class="checkout-title">
+        <h1>Checkout</h1>
+        <p>Review your order and choose your payment method</p>
+    </div>
+
+    <div class="checkout-grid">
+
+        <!-- ORDER SUMMARY -->
+
+        <div class="checkout-card">
+
+            <h2>🛒 Order Summary</h2>
+
+            {% for item in cart_items %}
+
+            <div class="order-item">
+
+                <div class="item-info">
+
+                    <h3>{{ item["name"] }}</h3>
+
+                    <p>
+                        ₹{{ "%.2f"|format(item["price"]) }}
+                        × {{ item["quantity"] }}
+                    </p>
+
+                </div>
+
+                <div class="item-price">
+                    ₹{{ "%.2f"|format(item["price"] * item["quantity"]) }}
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+
+            <div class="total-section">
+
+                <div class="total-row">
+                    <span>Subtotal</span>
+                    <span>₹{{ "%.2f"|format(total) }}</span>
+                </div>
+
+                <div class="total-row">
+                    <span>Service Charge</span>
+                    <span>₹0.00</span>
+                </div>
+
+                <div class="total-row grand-total">
+                    <span>Total</span>
+                    <span>₹{{ "%.2f"|format(total) }}</span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- PAYMENT -->
+
+        <div class="checkout-card">
+
+            <h2>💳 Payment Method</h2>
+
+            <form method="POST"
+                  action="{{ url_for('process_payment') }}">
+
+                <label class="payment-option">
+
+                    <input type="radio"
+                           name="payment_method"
+                           value="UPI"
+                           required>
+
+                    <span class="payment-name">
+                        📱 UPI Payment
+                    </span>
+
+                    <span class="payment-description">
+                        Pay using UPI / QR code
+                    </span>
+
+                </label>
+
+
+                <label class="payment-option">
+
+                    <input type="radio"
+                           name="payment_method"
+                           value="Cash">
+
+                    <span class="payment-name">
+                        💵 Cash at Counter
+                    </span>
+
+                    <span class="payment-description">
+                        Pay when you collect your order
+                    </span>
+
+                </label>
+
+
+                <button type="submit" class="pay-button">
+                    Continue to Payment
+                </button>
+
+            </form>
+
+            <a href="{{ url_for('cart') }}" class="back-cart">
+                ← Back to Cart
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

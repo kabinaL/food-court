@@ -1,0 +1,433 @@
+/* =========================================================
+   USER MANAGEMENT
+   ========================================================= */
+
+.users-container {
+    width: 100%;
+}
+
+
+/* HEADER */
+
+.users-header {
+    margin-bottom: 22px;
+}
+
+.users-header h2 {
+    color: #1f2937;
+
+    font-size: 25px;
+
+    margin-bottom: 5px;
+}
+
+.users-header p {
+    color: #6b7280;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   STAT CARDS
+   ========================================================= */
+
+.user-stats {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 18px;
+
+    margin-bottom: 22px;
+}
+
+.user-stat-card {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 20px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 3px 12px rgba(0, 0, 0, 0.035);
+}
+
+.user-stat-icon {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #fff7ed;
+
+    border-radius: 11px;
+
+    font-size: 22px;
+}
+
+.user-stat-card span {
+    display: block;
+
+    color: #6b7280;
+
+    font-size: 12px;
+}
+
+.user-stat-card strong {
+    display: block;
+
+    margin-top: 4px;
+
+    color: #1f2937;
+
+    font-size: 22px;
+}
+
+
+/* =========================================================
+   TOOLBAR
+   ========================================================= */
+
+.users-toolbar {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-bottom: 18px;
+
+    padding: 14px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 13px;
+}
+
+
+/* SEARCH */
+
+.user-search {
+    flex: 1;
+
+    height: 44px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 0 13px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 9px;
+
+    transition: 0.2s;
+}
+
+.user-search:focus-within {
+    border-color: #f97316;
+
+    box-shadow:
+        0 0 0 3px rgba(249, 115, 22, 0.10);
+}
+
+.user-search span {
+    font-size: 17px;
+}
+
+.user-search input {
+    width: 100%;
+
+    border: none;
+
+    outline: none;
+
+    font-size: 14px;
+}
+
+
+/* FILTER BUTTONS */
+
+.user-filter-buttons {
+    display: flex;
+
+    gap: 7px;
+}
+
+.user-filter {
+    padding: 9px 15px;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    color: #6b7280;
+
+    font-size: 13px;
+
+    cursor: pointer;
+}
+
+.user-filter:hover {
+    border-color: #f97316;
+
+    color: #f97316;
+}
+
+.user-filter.active {
+    background: #f97316;
+
+    border-color: #f97316;
+
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+.users-table-container {
+    overflow-x: auto;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 3px 12px rgba(0, 0, 0, 0.035);
+}
+
+.users-table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    min-width: 850px;
+}
+
+.users-table thead {
+    background: #f9fafb;
+}
+
+.users-table th {
+    padding: 14px 16px;
+
+    color: #6b7280;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    text-align: left;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.5px;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.users-table td {
+    padding: 15px 16px;
+
+    color: #4b5563;
+
+    font-size: 13px;
+
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.users-table tbody tr {
+    transition: background 0.2s ease;
+}
+
+.users-table tbody tr:hover {
+    background: #fffaf5;
+}
+
+.users-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* USER NAME */
+
+.user-name {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+.user-avatar {
+    width: 35px;
+    height: 35px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    background: #fff7ed;
+
+    color: #c2410c;
+
+    border-radius: 50%;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+.user-name strong {
+    color: #1f2937;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   ROLE BADGES
+   ========================================================= */
+
+.role-badge {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    padding: 6px 9px;
+
+    border-radius: 20px;
+
+    font-size: 10px;
+
+    font-weight: 700;
+}
+
+.role-badge.student {
+    background: #eff6ff;
+
+    color: #2563eb;
+}
+
+.role-badge.admin {
+    background: #fff7ed;
+
+    color: #c2410c;
+}
+
+
+/* =========================================================
+   DELETE
+   ========================================================= */
+
+.user-delete-btn {
+    padding: 7px 10px;
+
+    border: none;
+
+    border-radius: 7px;
+
+    background: #fee2e2;
+
+    color: #b91c1c;
+
+    font-size: 11px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.user-delete-btn:hover {
+    background: #fecaca;
+
+    transform: translateY(-1px);
+}
+
+.current-account {
+    color: #6b7280;
+
+    font-size: 11px;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   EMPTY
+   ========================================================= */
+
+.no-users {
+    padding: 65px 20px;
+
+    text-align: center;
+}
+
+.no-users div {
+    font-size: 50px;
+
+    margin-bottom: 12px;
+}
+
+.no-users h3 {
+    color: #1f2937;
+
+    margin-bottom: 6px;
+}
+
+.no-users p {
+    color: #6b7280;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .user-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .users-toolbar {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .user-filter-buttons {
+        justify-content: flex-start;
+    }
+}

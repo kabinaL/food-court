@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Food Court - Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/user_dashboard.css') }}">
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         NAVBAR
+    ========================= -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            🍴 FOOD<span>COURT</span>
+        </div>
+
+
+        <div class="nav-right">
+
+            <span class="welcome">
+                Welcome, {{ name }}
+            </span>
+
+            <a href="/logout" class="logout">
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- =========================
+         DASHBOARD
+    ========================= -->
+
+    <main class="dashboard">
+
+
+        <div class="heading">
+
+            <h1>
+                What would you like to eat?
+            </h1>
+
+            <p>
+                Order your favourite food from the campus food court.
+            </p>
+
+        </div>
+
+
+
+        <div class="cards">
+
+
+            <!-- =========================
+                 BROWSE MENU
+            ========================= -->
+
+            <a href="/menu" class="card">
+
+                <div class="card-icon">
+                    🍔
+                </div>
+
+                <h2>
+                    Browse Menu
+                </h2>
+
+                <p>
+                    Explore available food and drinks.
+                </p>
+
+                <span>
+                    View Menu →
+                </span>
+
+            </a>
+
+
+
+            <!-- =========================
+                 MY CART
+            ========================= -->
+
+            <a href="/cart" class="card">
+
+                <div class="card-icon">
+                    🛒
+                </div>
+
+                <h2>
+                    My Cart
+                </h2>
+
+                <p>
+                    View your selected food items.
+                </p>
+
+                <span>
+                    View Cart →
+                </span>
+
+            </a>
+
+
+
+            <!-- =========================
+                 MY ORDERS
+            ========================= -->
+
+            <a href="/my-orders" class="card">
+
+                <div class="card-icon">
+                    📦
+                </div>
+
+                <h2>
+                    My Orders
+                </h2>
+
+                <p>
+                    Track your previous and current orders.
+                </p>
+
+                <span>
+                    View Orders →
+                </span>
+
+            </a>
+
+
+
+            <!-- =========================
+                 MY PROFILE
+            ========================= -->
+
+            <a href="/profile" class="card">
+
+                <div class="card-icon">
+                    👤
+                </div>
+
+                <h2>
+                    My Profile
+                </h2>
+
+                <p>
+                    View and manage your account details.
+                </p>
+
+                <span>
+                    View Profile →
+                </span>
+
+            </a>
+
+
+        </div>
+
+
+    </main>
+
+
+</body>
+
+</html>

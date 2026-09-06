@@ -1,0 +1,175 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f5e9d8;
+    color: #321f17;
+    min-height: 100vh;
+}
+
+
+/* NAVBAR */
+
+.navbar {
+    height: 75px;
+    background: #ffffff;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 60px;
+
+    border-bottom: 1px solid #ead8c4;
+}
+
+.logo {
+    font-size: 23px;
+    font-weight: bold;
+    color: #321f17;
+}
+
+.logo span {
+    color: #754326;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.welcome {
+    color: #806b5d;
+    font-size: 14px;
+}
+
+.logout {
+    text-decoration: none;
+    color: #ffffff;
+    background: #754326;
+
+    padding: 10px 18px;
+    border-radius: 8px;
+
+    font-size: 14px;
+}
+
+.logout:hover {
+    background: #321f17;
+}
+
+
+/* DASHBOARD */
+
+.dashboard {
+    max-width: 1100px;
+    margin: 60px auto;
+    padding: 0 25px;
+}
+
+.heading {
+    margin-bottom: 40px;
+}
+
+.heading h1 {
+    font-size: 34px;
+    margin-bottom: 10px;
+}
+
+.heading p {
+    color: #806b5d;
+    font-size: 16px;
+}
+
+
+/* CARDS */
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+}
+
+.card {
+    background: #ffffff;
+
+    padding: 30px;
+
+    border-radius: 16px;
+
+    text-decoration: none;
+    color: #321f17;
+
+    border: 1px solid #ead8c4;
+
+    transition: 0.25s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(80, 45, 25, 0.12);
+}
+
+.card-icon {
+    width: 55px;
+    height: 55px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #f5e9d8;
+    border-radius: 12px;
+
+    font-size: 27px;
+
+    margin-bottom: 20px;
+}
+
+.card h2 {
+    font-size: 21px;
+    margin-bottom: 10px;
+}
+
+.card p {
+    color: #806b5d;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.card span {
+    color: #754326;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+
+    .navbar {
+        padding: 0 20px;
+    }
+
+    .welcome {
+        display: none;
+    }
+
+    .dashboard {
+        margin: 40px auto;
+    }
+
+    .heading h1 {
+        font-size: 27px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+}

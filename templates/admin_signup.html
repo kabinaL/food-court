@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Food Court - Admin Registration</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/signup.css') }}">
+</head>
+
+<body>
+
+<div class="signup-page">
+
+    <!-- LEFT SIDE -->
+    <section class="intro-section">
+
+        <div class="intro-content">
+
+            <div class="logo">
+                <div class="logo-icon">🍴</div>
+
+                <div>
+                    <div class="logo-name">
+                        FOOD<span>COURT</span>
+                    </div>
+
+                    <div class="logo-tagline">
+                        CAMPUS FOOD, MADE EASY
+                    </div>
+                </div>
+            </div>
+
+            <div class="intro-text">
+
+                <h1>
+                    Manage the
+                    <span>food court.</span>
+                </h1>
+
+                <p>
+                    Create your administrator account
+                    to manage food, orders and customers.
+                </p>
+
+                <div class="small-line"></div>
+
+            </div>
+
+            <div class="food-illustration">
+
+                <div class="circle-bg"></div>
+
+                <div class="food-tray">
+
+                    <div class="salad">
+                        🥗
+                    </div>
+
+                    <div class="burger">
+                        🍔
+                    </div>
+
+                    <div class="drink">
+                        🥤
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="security-box">
+
+                <div class="security-icon">
+                    ✓
+                </div>
+
+                <div>
+                    <h3>Admin Access</h3>
+
+                    <p>
+                        Authorized administrators can
+                        manage the food court system.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- RIGHT SIDE -->
+    <section class="form-section">
+
+        <div class="form-container">
+
+            <div class="account-icon">
+                🛡️
+            </div>
+
+            <h2>
+                Admin Account
+            </h2>
+
+            <p class="form-subtitle">
+                Register as a food court administrator
+            </p>
+
+
+            <form action="/signup/admin" method="POST">
+
+                <!-- Admin Name -->
+                <div class="input-group">
+
+                    <label for="full_name">
+                        Admin Name
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            ♙
+                        </span>
+
+                        <input
+                            type="text"
+                            id="full_name"
+                            name="full_name"
+                            placeholder="Enter admin name"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- Admin Email -->
+                <div class="input-group">
+
+                    <label for="email">
+                        Admin Email
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            ✉
+                        </span>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Enter admin email"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- Phone -->
+                <div class="input-group">
+
+                    <label for="phone">
+                        Phone Number
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            ☎
+                        </span>
+
+                        <input
+                            type="tel"
+                            id="phone"
+                            name="phone"
+                            placeholder="Enter phone number"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- Password -->
+                <div class="input-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            🔒
+                        </span>
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Create a password"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- Confirm Password -->
+                <div class="input-group">
+
+                    <label for="confirm_password">
+                        Confirm Password
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            🔒
+                        </span>
+
+                        <input
+                            type="password"
+                            id="confirm_password"
+                            name="confirm_password"
+                            placeholder="Confirm your password"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- Button -->
+                <button type="submit" class="create-btn">
+                    Create Admin Account
+                </button>
+
+            </form>
+
+
+            <div class="divider">
+
+                <span></span>
+
+                <p>OR</p>
+
+                <span></span>
+
+            </div>
+
+
+            <p class="signin-text">
+
+                Already have an account?
+
+                <a href="/">
+                    Sign In
+                </a>
+
+            </p>
+
+        </div>
+
+    </section>
+
+</div>
+
+</body>
+
+</html>

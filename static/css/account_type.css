@@ -1,0 +1,361 @@
+/* =========================================================
+   ACCOUNT TYPE PAGE
+   ========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5e8d5;
+    color: #21140f;
+    min-height: 100vh;
+}
+
+
+/* =========================================================
+   BRAND
+   ========================================================= */
+
+.brand {
+    position: absolute;
+    top: 20px;
+    left: 50px;
+
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: 1px;
+
+    color: #21140f;
+}
+
+
+/* =========================================================
+   MAIN PAGE
+   ========================================================= */
+
+.account-page {
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding-top: 165px;
+    padding-bottom: 40px;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.account-header {
+    text-align: center;
+    margin-bottom: 55px;
+}
+
+.account-header h1 {
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    color: #21140f;
+}
+
+.account-header p {
+    font-size: 20px;
+    color: #806a5c;
+}
+
+
+/* =========================================================
+   CARDS CONTAINER
+   ========================================================= */
+
+.account-cards {
+    width: 900px;
+    max-width: calc(100% - 40px);
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 35px;
+}
+
+
+/* =========================================================
+   ACCOUNT CARD
+   ========================================================= */
+
+.account-card {
+    background: #ffffff;
+
+    min-height: 435px;
+
+    border: 1px solid #ead9c5;
+    border-radius: 20px;
+
+    padding: 48px 38px;
+
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    box-shadow: 0 2px 8px rgba(60, 35, 20, 0.03);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.account-card:hover {
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 10px 25px rgba(60, 35, 20, 0.10);
+}
+
+
+/* =========================================================
+   ICON
+   ========================================================= */
+
+.account-icon {
+    width: 88px;
+    height: 88px;
+
+    border-radius: 50%;
+
+    background: #f5e8d5;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 40px;
+
+    margin-bottom: 25px;
+}
+
+
+/* =========================================================
+   CARD TITLE
+   ========================================================= */
+
+.account-card h2 {
+    font-size: 28px;
+    font-weight: 700;
+
+    margin-bottom: 20px;
+
+    color: #21140f;
+}
+
+
+/* =========================================================
+   CARD DESCRIPTION
+   ========================================================= */
+
+.account-card p {
+    max-width: 350px;
+
+    min-height: 65px;
+
+    font-size: 17px;
+    line-height: 1.6;
+
+    color: #806a5c;
+
+    margin-bottom: 35px;
+}
+
+
+/* =========================================================
+   CONTINUE BUTTON
+   ========================================================= */
+
+.continue-btn {
+    width: 100%;
+    max-width: 360px;
+
+    height: 55px;
+
+    border-radius: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-decoration: none;
+
+    font-size: 18px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease,
+        box-shadow 0.2s ease;
+
+    /* VERY IMPORTANT */
+    pointer-events: auto;
+}
+
+.continue-btn:hover {
+    transform: translateY(-2px);
+    opacity: 0.94;
+}
+
+.continue-btn:active {
+    transform: translateY(0);
+}
+
+
+/* Student button */
+
+.user-btn {
+    background: #7f4728;
+    color: #ffffff;
+}
+
+.user-btn:hover {
+    box-shadow: 0 6px 15px rgba(127, 71, 40, 0.25);
+}
+
+
+/* Admin button */
+
+.admin-btn {
+    background: #332019;
+    color: #ffffff;
+}
+
+.admin-btn:hover {
+    box-shadow: 0 6px 15px rgba(51, 32, 25, 0.25);
+}
+
+
+/* =========================================================
+   SIGN IN
+   ========================================================= */
+
+.signin-section {
+    margin-top: 42px;
+
+    text-align: center;
+}
+
+.signin-section p {
+    font-size: 18px;
+    color: #806a5c;
+}
+
+.signin-section a {
+    color: #5f321c;
+
+    font-weight: 700;
+
+    text-decoration: none;
+}
+
+.signin-section a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .account-page {
+        padding-top: 130px;
+    }
+
+    .account-header h1 {
+        font-size: 40px;
+    }
+
+    .account-cards {
+        width: 700px;
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .brand {
+        position: relative;
+
+        top: auto;
+        left: auto;
+
+        margin: 25px 0 0 30px;
+
+        align-self: flex-start;
+
+        font-size: 25px;
+    }
+
+    .account-page {
+        padding-top: 70px;
+    }
+
+    .account-header {
+        margin-bottom: 35px;
+        padding: 0 20px;
+    }
+
+    .account-header h1 {
+        font-size: 34px;
+    }
+
+    .account-header p {
+        font-size: 17px;
+    }
+
+    .account-cards {
+        grid-template-columns: 1fr;
+
+        width: 90%;
+        max-width: 450px;
+
+        gap: 25px;
+    }
+
+    .account-card {
+        min-height: auto;
+    }
+}
+
+
+@media (max-width: 450px) {
+
+    .account-card {
+        padding: 35px 25px;
+    }
+
+    .account-header h1 {
+        font-size: 30px;
+    }
+
+    .account-header p {
+        font-size: 16px;
+    }
+
+    .account-card h2 {
+        font-size: 24px;
+    }
+
+    .account-card p {
+        font-size: 16px;
+    }
+}

@@ -1,0 +1,868 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #f7efe4;
+    color: #321f17;
+}
+
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar {
+    height: 72px;
+
+    background: #fffdf9;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 65px;
+
+    border-bottom: 1px solid #eadbc9;
+
+    position: sticky;
+    top: 0;
+
+    z-index: 100;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+.logo span {
+    color: #9a5b32;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.nav-links a {
+    color: #806b5d;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+
+    transition: 0.2s;
+}
+
+.nav-links a:hover,
+.nav-links .active {
+    color: #8b4f2b;
+}
+
+.nav-links .logout {
+    background: #754326;
+    color: white;
+
+    padding: 10px 17px;
+
+    border-radius: 8px;
+}
+
+.nav-links .logout:hover {
+    background: #321f17;
+}
+
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+    max-width: 1180px;
+    min-height: 360px;
+
+    margin: 35px auto 0;
+
+    padding: 50px 65px;
+
+    background: #3b2419;
+
+    border-radius: 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    overflow: hidden;
+
+    position: relative;
+}
+
+.hero::after {
+    content: "";
+
+    width: 300px;
+    height: 300px;
+
+    border: 1px solid #9a6a4d;
+
+    border-radius: 50%;
+
+    position: absolute;
+
+    right: 40px;
+    top: -120px;
+}
+
+.hero-content {
+    max-width: 550px;
+
+    position: relative;
+    z-index: 2;
+}
+
+.hero-small {
+    color: #d6ad8c;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    letter-spacing: 2px;
+}
+
+.hero h1 {
+    color: #fffaf5;
+
+    font-size: 48px;
+
+    line-height: 1.05;
+
+    margin: 15px 0;
+}
+
+.hero h1 span {
+    color: #e1b58f;
+}
+
+.hero p {
+    color: #d9c8bb;
+
+    font-size: 15px;
+
+    line-height: 1.6;
+
+    max-width: 420px;
+
+    margin-bottom: 25px;
+}
+
+.explore-btn {
+    display: inline-block;
+
+    text-decoration: none;
+
+    background: #f3dfc9;
+
+    color: #4b2b1d;
+
+    padding: 13px 20px;
+
+    border-radius: 9px;
+
+    font-size: 14px;
+
+    font-weight: bold;
+}
+
+.explore-btn:hover {
+    background: white;
+}
+
+
+
+/* =========================
+   HERO FOOD
+========================= */
+
+.hero-food {
+    width: 350px;
+    height: 300px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+}
+
+.food-circle {
+    width: 235px;
+    height: 235px;
+
+    background: #f1dfcb;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+}
+
+.main-food {
+    font-size: 110px;
+
+    transform: rotate(-8deg);
+
+    filter: drop-shadow(0 12px 8px rgba(0,0,0,0.18));
+}
+
+.floating-food {
+    position: absolute;
+
+    background: white;
+
+    width: 58px;
+    height: 58px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 28px;
+
+    box-shadow: 0 7px 20px rgba(50,30,20,0.15);
+}
+
+.food-one {
+    top: 5px;
+    left: 5px;
+}
+
+.food-two {
+    bottom: 10px;
+    left: -15px;
+}
+
+.food-three {
+    right: -5px;
+    bottom: 25px;
+}
+
+
+
+/* =========================
+   MENU CONTAINER
+========================= */
+
+.menu-container {
+    max-width: 1180px;
+
+    margin: 55px auto;
+
+    padding: 0 25px;
+}
+
+
+
+/* =========================
+   SECTION HEADING
+========================= */
+
+.section-heading {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: end;
+
+    margin-bottom: 25px;
+}
+
+.section-label {
+    color: #9a5b32;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    letter-spacing: 2px;
+}
+
+.section-heading h2 {
+    font-size: 32px;
+
+    margin-top: 7px;
+}
+
+.section-heading p {
+    color: #806b5d;
+
+    font-size: 14px;
+}
+
+
+
+/* =========================
+   CATEGORIES
+========================= */
+
+.categories {
+    display: flex;
+
+    gap: 10px;
+
+    margin-bottom: 30px;
+
+    overflow-x: auto;
+
+    padding-bottom: 5px;
+}
+
+.category-btn {
+    border: 1px solid #e1d0be;
+
+    background: #fffdf9;
+
+    color: #684b3c;
+
+    padding: 10px 17px;
+
+    border-radius: 30px;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    font-size: 13px;
+
+    transition: 0.2s;
+}
+
+.category-btn:hover,
+.category-btn.active {
+    background: #754326;
+
+    color: white;
+
+    border-color: #754326;
+}
+
+
+
+/* =========================
+   FOOD GRID
+========================= */
+
+.food-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 24px;
+}
+
+
+
+/* =========================
+   FOOD CARD
+========================= */
+
+.food-card {
+    background: #fffdf9;
+
+    border: 1px solid #eadbc9;
+
+    border-radius: 17px;
+
+    overflow: hidden;
+
+    transition: 0.25s;
+}
+
+.food-card:hover {
+    transform: translateY(-6px);
+
+    box-shadow: 0 15px 35px rgba(75,45,25,0.12);
+}
+
+
+
+/* =========================
+   FOOD IMAGE
+========================= */
+
+.food-image {
+    height: 180px;
+
+    background: #f0dfcc;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 75px;
+
+    position: relative;
+}
+
+.popular {
+    position: absolute;
+
+    top: 12px;
+    left: 12px;
+
+    background: #fffaf4;
+
+    color: #8b4f2b;
+
+    padding: 6px 9px;
+
+    border-radius: 20px;
+
+    font-size: 10px;
+
+    font-weight: bold;
+}
+
+
+
+/* =========================
+   FOOD INFO
+========================= */
+
+.food-info {
+    padding: 20px;
+}
+
+.food-category {
+    color: #9a5b32;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+}
+
+.food-info h3 {
+    font-size: 20px;
+
+    margin: 8px 0;
+}
+
+.food-info p {
+    color: #806b5d;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+
+    min-height: 40px;
+}
+
+
+
+/* =========================
+   FOOTER OF CARD
+========================= */
+
+.food-footer {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-top: 18px;
+}
+
+.price {
+    font-size: 21px;
+
+    font-weight: bold;
+
+    color: #321f17;
+}
+
+.add-btn {
+    border: none;
+
+    background: #754326;
+
+    color: white;
+
+    padding: 9px 14px;
+
+    border-radius: 8px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    transition: 0.2s;
+}
+
+.add-btn span {
+    font-size: 18px;
+}
+
+.add-btn:hover {
+    background: #321f17;
+
+    transform: scale(1.03);
+}
+
+
+
+/* =========================
+   EMPTY MENU
+========================= */
+
+.empty-menu {
+    background: #fffdf9;
+
+    border: 1px solid #eadbc9;
+
+    border-radius: 17px;
+
+    padding: 60px;
+
+    text-align: center;
+}
+
+.empty-menu div {
+    font-size: 50px;
+
+    margin-bottom: 15px;
+}
+
+.empty-menu p {
+    color: #806b5d;
+
+    margin-top: 8px;
+}
+
+
+
+/* =========================
+   BACK
+========================= */
+
+.back {
+    display: inline-block;
+
+    margin-top: 35px;
+
+    text-decoration: none;
+
+    color: #754326;
+
+    font-weight: bold;
+
+    font-size: 14px;
+}
+
+.back:hover {
+    text-decoration: underline;
+}
+
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 900px) {
+
+    .navbar {
+        padding: 0 25px;
+    }
+
+    .hero {
+        margin: 25px;
+        padding: 40px;
+    }
+
+    .hero-food {
+        width: 260px;
+    }
+
+    .food-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+@media (max-width: 650px) {
+
+    .nav-links {
+        gap: 10px;
+    }
+
+    .nav-links a:not(.logout) {
+        display: none;
+    }
+
+    .hero {
+        margin: 20px;
+        padding: 35px 25px;
+
+        min-height: 500px;
+
+        flex-direction: column;
+
+        text-align: center;
+    }
+
+    .hero h1 {
+        font-size: 38px;
+    }
+
+    .hero p {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-food {
+        height: 220px;
+    }
+
+    .food-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .section-heading {
+        display: block;
+    }
+
+    .section-heading p {
+        margin-top: 8px;
+    }
+}
+/* =========================
+   PAGE ANIMATIONS
+========================= */
+
+/* Hero comes in from the top */
+.hero {
+    animation: heroEnter 0.8s ease-out;
+}
+
+@keyframes heroEnter {
+    from {
+        opacity: 0;
+        transform: translateY(-25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Hero food gently floats */
+.food-circle {
+    animation: floatFood 4s ease-in-out infinite;
+}
+
+@keyframes floatFood {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-12px);
+    }
+}
+
+
+/* Individual floating food items */
+.food-one {
+    animation: smallFloat 3s ease-in-out infinite;
+}
+
+.food-two {
+    animation: smallFloat 3.5s ease-in-out infinite 0.4s;
+}
+
+.food-three {
+    animation: smallFloat 3.2s ease-in-out infinite 0.8s;
+}
+
+@keyframes smallFloat {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-8px) rotate(5deg);
+    }
+}
+
+
+/* Menu heading animation */
+.section-heading {
+    animation: fadeUp 0.7s ease-out 0.2s both;
+}
+
+.categories {
+    animation: fadeUp 0.7s ease-out 0.35s both;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Food cards enter one after another */
+.food-card {
+    animation: cardEnter 0.6s ease-out both;
+}
+
+.food-card:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.food-card:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.food-card:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.food-card:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.food-card:nth-child(5) {
+    animation-delay: 0.5s;
+}
+
+.food-card:nth-child(6) {
+    animation-delay: 0.6s;
+}
+
+@keyframes cardEnter {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Add button interaction */
+.add-btn {
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+}
+
+.add-btn:active {
+    transform: scale(0.92);
+}
+
+
+/* Category button animation */
+.category-btn {
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.category-btn:hover {
+    transform: translateY(-2px);
+}
+
+
+/* Logo subtle movement */
+.logo {
+    transition: transform 0.2s ease;
+}
+
+.logo:hover {
+    transform: translateX(3px);
+}
+
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+}
+/* =========================
+   FILTER ANIMATION
+========================= */
+
+.food-card {
+    opacity: 1;
+    transform: scale(1);
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+}
+
+.food-card.show-card {
+    animation: filterAppear 0.45s ease forwards;
+}
+
+@keyframes filterAppear {
+
+    0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.96);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+}

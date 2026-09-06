@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sales Analytics - Food Court</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/admin_dashboard.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/sales_analytics.css') }}">
+
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-header">
+
+            <div class="admin-logo">🍴</div>
+
+            <div>
+                <h2>Food Court</h2>
+                <p>Admin Panel</p>
+            </div>
+
+        </div>
+
+        <nav class="sidebar-menu">
+
+            <a href="/admin-dashboard" class="menu-item">
+                <span class="menu-icon">📊</span>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="/admin-food" class="menu-item">
+                <span class="menu-icon">🍔</span>
+                <span>Food Management</span>
+            </a>
+
+            <a href="/admin-orders" class="menu-item">
+                <span class="menu-icon">📦</span>
+                <span>Orders</span>
+            </a>
+
+            <a href="/admin-users" class="menu-item">
+                <span class="menu-icon">👥</span>
+                <span>Users</span>
+            </a>
+
+            <a href="/sales-analytics" class="menu-item active">
+                <span class="menu-icon">📈</span>
+                <span>Sales Analytics</span>
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <a href="/logout" class="menu-item logout-item">
+                <span class="menu-icon">🚪</span>
+                <span>Logout</span>
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main-content">
+
+        <header class="analytics-header">
+
+            <div>
+                <span class="small-title">ADMIN ANALYTICS</span>
+
+                <h1>Sales Overview</h1>
+
+                <p>
+                    Track your food court performance and revenue
+                </p>
+            </div>
+
+            <div class="analytics-date">
+                📅
+                <div>
+                    <strong>Sales Report</strong>
+                    <small>Last 7 days</small>
+                </div>
+            </div>
+
+        </header>
+
+
+        <!-- SUMMARY -->
+
+        <section class="analytics-summary">
+
+            <div class="analytics-card">
+
+                <div class="card-icon">₹</div>
+
+                <div class="card-data">
+
+                    <span>TOTAL REVENUE</span>
+
+                    <h2>
+                        ₹{{ "%.2f"|format(total_sales) }}
+                    </h2>
+
+                    <p>Overall sales</p>
+
+                </div>
+
+            </div>
+
+
+            <div class="analytics-card">
+
+                <div class="card-icon orange">📦</div>
+
+                <div class="card-data">
+
+                    <span>TOTAL ORDERS</span>
+
+                    <h2>{{ total_orders }}</h2>
+
+                    <p>All valid orders</p>
+
+                </div>
+
+            </div>
+
+
+            <div class="analytics-card">
+
+                <div class="card-icon purple">🧾</div>
+
+                <div class="card-data">
+
+                    <span>AVERAGE ORDER</span>
+
+                    <h2>
+                        ₹{{ "%.2f"|format(average_order) }}
+                    </h2>
+
+                    <p>Average order value</p>
+
+                </div>
+
+            </div>
+
+
+            <div class="analytics-card">
+
+                <div class="card-icon green">⚡</div>
+
+                <div class="card-data">
+
+                    <span>TODAY'S SALES</span>
+
+                    <h2>
+                        ₹{{ "%.2f"|format(today_sales) }}
+                    </h2>
+
+                    <p>{{ today_orders }} orders today</p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CHART -->
+
+        <section class="chart-panel">
+
+            <div class="chart-header">
+
+                <div>
+
+                    <span class="chart-label">
+                        REVENUE PERFORMANCE
+                    </span>
+
+                    <h2>Sales Performance</h2>
+
+                    <p>
+                        Daily revenue generated from orders
+                    </p>
+
+                </div>
+
+                <div class="chart-legend">
+                    <span class="legend-dot"></span>
+                    Revenue
+                </div>
+
+            </div>
+
+
+            <div class="sales-chart">
+
+                <div class="chart-area">
+
+                    <div class="chart-grid">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+
+
+                    <div class="bars">
+
+                        {% if daily_sales %}
+
+                            {% set max_sales =
+                                daily_sales | map(attribute='sales') | max
+                            %}
+
+                            {% for day in daily_sales|reverse %}
+
+                                {% if max_sales > 0 %}
+                                    {% set bar_height =
+                                        (day['sales'] / max_sales) * 100
+                                    %}
+                                {% else %}
+                                    {% set bar_height = 5 %}
+                                {% endif %}
+
+                                <div class="bar-column">
+
+                                    <div class="bar-tooltip">
+                                        ₹{{ "%.2f"|format(day['sales']) }}
+                                    </div>
+
+                                    <div
+                                        class="bar"
+                                        style="height: {{ bar_height }}%;"
+                                    ></div>
+
+                                    <strong>
+                                        {{ day['sale_date'][5:] }}
+                                    </strong>
+
+                                    <small>
+                                        {{ day['order_count'] }} orders
+                                    </small>
+
+                                </div>
+
+                            {% endfor %}
+
+                        {% else %}
+
+                            <div class="no-data">
+                                📊
+                                <h3>No sales data</h3>
+                                <p>
+                                    Sales will appear after orders are placed.
+                                </p>
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- LOWER CONTENT -->
+
+        <section class="analytics-grid">
+
+
+            <!-- TOP FOODS -->
+
+            <div class="analytics-panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <span>POPULAR ITEMS</span>
+                        <h2>Top Selling Foods</h2>
+                    </div>
+
+                    <div class="panel-icon">🍔</div>
+
+                </div>
+
+
+                {% if top_foods %}
+
+                    {% for food in top_foods %}
+
+                    <div class="food-row">
+
+                        <div class="rank">
+                            {{ loop.index }}
+                        </div>
+
+                        <div class="food-name">
+
+                            <strong>
+                                {{ food['food_name'] }}
+                            </strong>
+
+                            <small>
+                                {{ food['quantity_sold'] }} items sold
+                            </small>
+
+                        </div>
+
+                        <strong class="food-revenue">
+                            ₹{{ "%.2f"|format(food['revenue']) }}
+                        </strong>
+
+                    </div>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <div class="empty-small">
+                        No food sales yet.
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- CATEGORY -->
+
+            <div class="analytics-panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <span>CATEGORY PERFORMANCE</span>
+                        <h2>Sales by Category</h2>
+                    </div>
+
+                    <div class="panel-icon">🥘</div>
+
+                </div>
+
+
+                {% if category_sales %}
+
+                    {% set max_category =
+                        category_sales | map(attribute='sales') | max
+                    %}
+
+                    {% for category in category_sales %}
+
+                    <div class="category-row">
+
+                        <div class="category-info">
+
+                            <strong>
+                                {{ category['category'] }}
+                            </strong>
+
+                            <span>
+                                ₹{{ "%.2f"|format(category['sales']) }}
+                            </span>
+
+                        </div>
+
+                        <div class="progress-track">
+
+                            {% if max_category > 0 %}
+
+                                {% set percentage =
+                                    (category['sales'] / max_category) * 100
+                                %}
+
+                            {% else %}
+
+                                {% set percentage = 0 %}
+
+                            {% endif %}
+
+                            <div
+                                class="progress-bar"
+                                style="width: {{ percentage }}%;"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <div class="empty-small">
+                        No category data yet.
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- PAYMENT -->
+
+            <div class="analytics-panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <span>PAYMENT ANALYSIS</span>
+                        <h2>Payment Methods</h2>
+                    </div>
+
+                    <div class="panel-icon">💳</div>
+
+                </div>
+
+
+                {% if payment_summary %}
+
+                    {% for payment in payment_summary %}
+
+                    <div class="payment-row">
+
+                        <div class="payment-left">
+
+                            <div class="payment-icon">
+
+                                {% if payment['payment_method'] == 'UPI' %}
+                                    📱
+                                {% else %}
+                                    💵
+                                {% endif %}
+
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    {{ payment['payment_method'] }}
+                                </strong>
+
+                                <small>
+                                    {{ payment['payment_count'] }}
+                                    transactions
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                        <strong>
+                            ₹{{ "%.2f"|format(payment['payment_total']) }}
+                        </strong>
+
+                    </div>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <div class="empty-small">
+                        No payment data yet.
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+</html>

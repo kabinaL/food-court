@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Food Court | My Profile</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/cart.css') }}">
+
+    <style>
+
+        .profile-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 55px 25px;
+        }
+
+        .profile-heading {
+            margin-bottom: 30px;
+        }
+
+        .profile-heading span {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #a66a3f;
+        }
+
+        .profile-heading h1 {
+            margin: 8px 0;
+            font-size: 40px;
+            color: #3d2418;
+        }
+
+        .profile-heading p {
+            color: #806b61;
+            font-size: 16px;
+        }
+
+        .profile-card {
+            background: #fff;
+            border: 1px solid #eaded5;
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 8px 25px rgba(70, 40, 20, 0.08);
+        }
+
+        .profile-top {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #eee1d8;
+            margin-bottom: 30px;
+        }
+
+        .profile-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #f3e4d8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 38px;
+            flex-shrink: 0;
+        }
+
+        .profile-name h2 {
+            margin: 0 0 6px;
+            color: #3d2418;
+            font-size: 25px;
+        }
+
+        .profile-name p {
+            margin: 0;
+            color: #806b61;
+            font-size: 14px;
+        }
+
+        .profile-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            color: #5d4037;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .form-group input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 13px 15px;
+            border: 1px solid #dfcfc4;
+            border-radius: 10px;
+            background: #fffdfb;
+            color: #3d2418;
+            font-size: 15px;
+            outline: none;
+            transition: 0.3s ease;
+        }
+
+        .form-group input:focus {
+            border-color: #a66a3f;
+            box-shadow: 0 0 0 3px rgba(166, 106, 63, 0.10);
+        }
+
+        .form-group input:disabled {
+            background: #f4efeb;
+            color: #806b61;
+            cursor: not-allowed;
+        }
+
+        .student-note {
+            grid-column: 1 / -1;
+            margin-top: -8px;
+            color: #94796b;
+            font-size: 12px;
+        }
+
+        .profile-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .save-button,
+        .back-button {
+            border: none;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .save-button {
+            background: #6b3f25;
+            color: white;
+        }
+
+        .save-button:hover {
+            background: #4d2b1b;
+            transform: translateY(-2px);
+        }
+
+        .back-button {
+            background: #f3e4d8;
+            color: #6b3f25;
+        }
+
+        .back-button:hover {
+            background: #ead5c5;
+            transform: translateY(-2px);
+        }
+
+        .flash-message {
+            background: #f3e9df;
+            border: 1px solid #dfcbbd;
+            color: #6b3f25;
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 650px) {
+
+            .profile-container {
+                padding: 40px 18px;
+            }
+
+            .profile-heading h1 {
+                font-size: 32px;
+            }
+
+            .profile-card {
+                padding: 25px;
+            }
+
+            .profile-top {
+                align-items: flex-start;
+            }
+
+            .profile-form {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full-width,
+            .student-note {
+                grid-column: auto;
+            }
+
+            .profile-actions {
+                flex-direction: column;
+            }
+
+            .save-button,
+            .back-button {
+                text-align: center;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        🍴 FOOD<span>COURT</span>
+    </div>
+
+
+    <div class="nav-links">
+
+        <a href="/user-dashboard">
+            Home
+        </a>
+
+        <a href="/menu">
+            Menu
+        </a>
+
+        <a href="/cart">
+            🛒 Cart
+        </a>
+
+        <a href="/my-orders">
+            Orders
+        </a>
+
+        <a href="/logout" class="logout">
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =========================
+     PROFILE
+========================= -->
+
+<main class="profile-container">
+
+
+    <div class="profile-heading">
+
+        <span>
+            MY ACCOUNT
+        </span>
+
+        <h1>
+            My Profile
+        </h1>
+
+        <p>
+            View and update your Food Court account details.
+        </p>
+
+    </div>
+
+
+
+    <!-- FLASH MESSAGE -->
+
+    {% with messages = get_flashed_messages() %}
+
+        {% if messages %}
+
+            {% for message in messages %}
+
+                <div class="flash-message">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+
+
+    <div class="profile-card">
+
+
+        <!-- PROFILE HEADER -->
+
+        <div class="profile-top">
+
+            <div class="profile-icon">
+                👤
+            </div>
+
+
+            <div class="profile-name">
+
+                <h2>
+                    {{ user["full_name"] }}
+                </h2>
+
+                <p>
+                    Student Account
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- PROFILE FORM -->
+
+        <form action="/profile/update"
+              method="POST"
+              class="profile-form">
+
+
+            <!-- FULL NAME -->
+
+            <div class="form-group">
+
+                <label for="full_name">
+                    Full Name
+                </label>
+
+                <input type="text"
+                       id="full_name"
+                       name="full_name"
+                       value="{{ user['full_name'] }}"
+                       required>
+
+            </div>
+
+
+
+            <!-- STUDENT ID -->
+
+            <div class="form-group">
+
+                <label for="student_id">
+                    Student ID
+                </label>
+
+                <input type="text"
+                       id="student_id"
+                       value="{{ user['student_id'] }}"
+                       disabled>
+
+            </div>
+
+
+            <div class="student-note">
+                Student ID cannot be changed.
+            </div>
+
+
+
+            <!-- EMAIL -->
+
+            <div class="form-group">
+
+                <label for="email">
+                    Email Address
+                </label>
+
+                <input type="email"
+                       id="email"
+                       name="email"
+                       value="{{ user['email'] }}"
+                       required>
+
+            </div>
+
+
+
+            <!-- PHONE -->
+
+            <div class="form-group">
+
+                <label for="phone">
+                    Phone Number
+                </label>
+
+                <input type="tel"
+                       id="phone"
+                       name="phone"
+                       value="{{ user['phone'] }}"
+                       required>
+
+            </div>
+
+
+
+            <!-- BUTTONS -->
+
+            <div class="profile-actions">
+
+                <button type="submit"
+                        class="save-button">
+
+                    Save Changes
+
+                </button>
+
+
+                <a href="/user-dashboard"
+                   class="back-button">
+
+                    ← Back to Dashboard
+
+                </a>
+
+            </div>
+
+
+        </form>
+
+
+    </div>
+
+
+</main>
+
+
+</body>
+
+</html>

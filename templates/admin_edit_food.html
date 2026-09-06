@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Food - Food Court Admin</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/admin_food.css') }}">
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="sidebar-header">
+
+            <div class="admin-logo">🍴</div>
+
+            <div>
+                <h2>Food Court</h2>
+                <p>Admin Panel</p>
+            </div>
+
+        </div>
+
+        <nav class="sidebar-menu">
+
+            <a href="/admin-dashboard" class="menu-item">
+                <span>📊</span>
+                Dashboard
+            </a>
+
+            <a href="/admin-food" class="menu-item active">
+                <span>🍔</span>
+                Food Management
+            </a>
+
+            <a href="/admin-orders" class="menu-item">
+                <span>📦</span>
+                Orders
+            </a>
+
+            <a href="/admin-users" class="menu-item">
+                <span>👥</span>
+                Users
+            </a>
+
+            <a href="/sales-analytics" class="menu-item">
+                <span>📈</span>
+                Sales Analytics
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <a href="/logout" class="menu-item logout-item">
+                <span>🚪</span>
+                Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main-content">
+
+        <div class="page-heading">
+
+            <div>
+                <span class="heading-label">FOOD MANAGEMENT</span>
+
+                <h1>Edit Food</h1>
+
+                <p>Update food item details</p>
+            </div>
+
+            <a href="/admin-food" class="back-btn">
+                ← Back to Food
+            </a>
+
+        </div>
+
+
+        <!-- EDIT CARD -->
+
+        <div class="edit-wrapper">
+
+            <div class="edit-card">
+
+                <div class="edit-card-header">
+
+                    <div class="edit-icon">
+                        ✏️
+                    </div>
+
+                    <div>
+                        <h2>Edit Food Item</h2>
+
+                        <p>
+                            Update the information for
+                            <strong>{{ food['name'] }}</strong>
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <form method="POST"
+                      action="/admin-edit-food/{{ food['id'] }}"
+                      class="food-form">
+
+
+                    <!-- FOOD NAME -->
+
+                    <div class="form-group">
+
+                        <label for="name">
+                            Food Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            value="{{ food['name'] }}"
+                            placeholder="Enter food name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- DESCRIPTION -->
+
+                    <div class="form-group">
+
+                        <label for="description">
+                            Description
+                        </label>
+
+                        <textarea
+                            id="description"
+                            name="description"
+                            maxlength="250"
+                            placeholder="Enter food description"
+                            required
+                        >{{ food['description'] }}</textarea>
+
+                        <div class="field-note">
+                            Maximum 250 characters
+                        </div>
+
+                    </div>
+
+
+                    <!-- PRICE + CATEGORY -->
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label for="price">
+                                Price
+                            </label>
+
+                            <div class="price-input">
+
+                                <span>₹</span>
+
+                                <input
+                                    type="number"
+                                    id="price"
+                                    name="price"
+                                    step="0.01"
+                                    min="0"
+                                    value="{{ food['price'] }}"
+                                    required
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="category">
+                                Category
+                            </label>
+
+                            <select
+                                id="category"
+                                name="category"
+                                required
+                            >
+
+                                <option value="Snacks"
+                                    {% if food['category'] == 'Snacks' %}selected{% endif %}>
+                                    Snacks
+                                </option>
+
+                                <option value="Main Course"
+                                    {% if food['category'] == 'Main Course' %}selected{% endif %}>
+                                    Main Course
+                                </option>
+
+                                <option value="Beverages"
+                                    {% if food['category'] == 'Beverages' %}selected{% endif %}>
+                                    Beverages
+                                </option>
+
+                                <option value="Desserts"
+                                    {% if food['category'] == 'Desserts' %}selected{% endif %}>
+                                    Desserts
+                                </option>
+
+                                <option value="Breakfast"
+                                    {% if food['category'] == 'Breakfast' %}selected{% endif %}>
+                                    Breakfast
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- AVAILABILITY -->
+
+                    <div class="form-group availability-group">
+
+                        <label>
+                            Availability
+                        </label>
+
+                        <div class="availability-options">
+
+                            <label class="radio-option">
+
+                                <input
+                                    type="radio"
+                                    name="available"
+                                    value="1"
+                                    {% if food['available'] == 1 %}checked{% endif %}
+                                >
+
+                                <span class="radio-custom"></span>
+
+                                <span>Available</span>
+
+                            </label>
+
+
+                            <label class="radio-option">
+
+                                <input
+                                    type="radio"
+                                    name="available"
+                                    value="0"
+                                    {% if food['available'] == 0 %}checked{% endif %}
+                                >
+
+                                <span class="radio-custom"></span>
+
+                                <span>Unavailable</span>
+
+                            </label>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- BUTTONS -->
+
+                    <div class="form-actions">
+
+                        <a href="/admin-food" class="cancel-btn">
+                            Cancel
+                        </a>
+
+                        <button type="submit" class="save-btn">
+                            <span>✓</span>
+                            Save Changes
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+
+            <!-- SIDE INFO -->
+
+            <div class="edit-info">
+
+                <div class="info-icon">
+                    💡
+                </div>
+
+                <h3>Food Item</h3>
+
+                <p>
+                    Keep the food information accurate so students
+                    can easily understand what they are ordering.
+                </p>
+
+                <div class="info-line">
+                    <span>🍽️</span>
+                    <div>
+                        <strong>Food Name</strong>
+                        <small>Use a clear and simple name</small>
+                    </div>
+                </div>
+
+                <div class="info-line">
+                    <span>💰</span>
+                    <div>
+                        <strong>Price</strong>
+                        <small>Enter the current selling price</small>
+                    </div>
+                </div>
+
+                <div class="info-line">
+                    <span>🟢</span>
+                    <div>
+                        <strong>Availability</strong>
+                        <small>Control whether students can order it</small>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>

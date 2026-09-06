@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Food Court - Create Account</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/signup.css') }}">
+</head>
+
+<body>
+
+<div class="signup-page">
+
+    <!-- ================= LEFT SIDE ================= -->
+
+    <section class="intro-section">
+
+        <div class="intro-content">
+
+            <!-- Logo -->
+            <div class="logo">
+
+                <div class="logo-icon">
+                    🍴
+                </div>
+
+                <div>
+                    <div class="logo-name">
+                        FOOD<span>COURT</span>
+                    </div>
+
+                    <div class="logo-tagline">
+                        CAMPUS FOOD, MADE EASY
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- Heading -->
+            <div class="intro-text">
+
+                <h1>
+                    Join the
+                    <span>food court.</span>
+                </h1>
+
+                <p>
+                    Create your account and enjoy
+                    quick and easy campus food ordering.
+                </p>
+
+                <div class="small-line"></div>
+
+            </div>
+
+
+            <!-- Food Illustration -->
+            <div class="food-illustration">
+
+                <div class="circle-bg"></div>
+
+                <div class="food-tray">
+
+                    <div class="salad">
+                        🥗
+                    </div>
+
+                    <div class="burger">
+                        🍔
+                    </div>
+
+                    <div class="drink">
+                        🥤
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Security Box -->
+            <div class="security-box">
+
+                <div class="security-icon">
+                    ✓
+                </div>
+
+                <div>
+
+                    <h3>
+                        Safe & Secure
+                    </h3>
+
+                    <p>
+                        Your data is protected with
+                        the highest security standards.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= RIGHT SIDE ================= -->
+
+    <section class="form-section">
+
+        <div class="form-container">
+
+            <!-- Header Icon -->
+            <div class="account-icon">
+                👤
+                <span>+</span>
+            </div>
+
+
+            <h2>
+                Create Account
+            </h2>
+
+            <p class="form-subtitle">
+                Register to start ordering your favourite food
+            </p>
+
+
+            <!-- ================= FLASH MESSAGES ================= -->
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+
+                {% if messages %}
+
+                    <div class="flash-container">
+
+                        {% for category, message in messages %}
+
+                            <div class="flash-message {{ category }}">
+                                {{ message }}
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% endif %}
+
+            {% endwith %}
+
+
+            <!-- ================= SIGNUP FORM ================= -->
+
+            <form method="POST"
+                  action="{{ url_for('signup') }}">
+
+                <!-- Full Name -->
+                <div class="input-group">
+
+                    <label for="full_name">
+                        Full Name
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            ♙
+                        </span>
+
+                        <input
+                            type="text"
+                            id="full_name"
+                            name="full_name"
+                            placeholder="Enter your full name"
+                            autocomplete="name"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- Student ID -->
+                <div class="input-group">
+
+                    <label for="student_id">
+                        Student ID
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            ▣
+                        </span>
+
+                        <input
+                            type="text"
+                            id="student_id"
+                            name="student_id"
+                            placeholder="Enter your student ID"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- Email -->
+                <div class="input-group">
+
+                    <label for="email">
+                        Email Address
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            ✉
+                        </span>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Enter your email"
+                            autocomplete="email"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- Phone -->
+                <div class="input-group">
+
+                    <label for="phone">
+                        Phone Number
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            ☎
+                        </span>
+
+                        <input
+                            type="tel"
+                            id="phone"
+                            name="phone"
+                            placeholder="Enter your phone number"
+                            autocomplete="tel"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- Password -->
+                <div class="input-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            🔒
+                        </span>
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Create a password"
+                            autocomplete="new-password"
+                            minlength="6"
+                            required
+                        >
+
+                        <span class="eye"
+                              onclick="togglePassword('password', this)">
+                            ◉
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Confirm Password -->
+                <div class="input-group">
+
+                    <label for="confirm_password">
+                        Confirm Password
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            🔒
+                        </span>
+
+                        <input
+                            type="password"
+                            id="confirm_password"
+                            name="confirm_password"
+                            placeholder="Confirm your password"
+                            autocomplete="new-password"
+                            minlength="6"
+                            required
+                        >
+
+                        <span class="eye"
+                              onclick="togglePassword('confirm_password', this)">
+                            ◉
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Create Account Button -->
+                <button type="submit"
+                        class="create-btn">
+
+                    Create Account
+
+                </button>
+
+            </form>
+
+
+            <!-- Divider -->
+            <div class="divider">
+
+                <span></span>
+
+                <p>OR</p>
+
+                <span></span>
+
+            </div>
+
+
+            <!-- Login -->
+            <p class="signin-text">
+
+                Already have an account?
+
+                <a href="{{ url_for('login') }}">
+                    Sign In
+                </a>
+
+            </p>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+<!-- ================= PASSWORD TOGGLE ================= -->
+
+<script>
+
+function togglePassword(inputId, icon) {
+
+    const input = document.getElementById(inputId);
+
+    if (input.type === "password") {
+
+        input.type = "text";
+        icon.textContent = "◉";
+
+    } else {
+
+        input.type = "password";
+        icon.textContent = "◉";
+
+    }
+
+}
+
+</script>
+
+</body>
+
+</html>

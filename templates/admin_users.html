@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>User Management - Food Court Admin</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static',
+          filename='css/admin_dashboard.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static',
+          filename='css/admin_users.css') }}">
+
+</head>
+
+
+<body>
+
+<div class="admin-layout">
+
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-header">
+
+            <div class="admin-logo">
+                🍴
+            </div>
+
+            <div>
+                <h2>Food Court</h2>
+                <p>Admin Panel</p>
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-menu">
+
+            <a href="{{ url_for('admin_dashboard') }}"
+               class="menu-item">
+
+                <span class="menu-icon">📊</span>
+                <span>Dashboard</span>
+
+            </a>
+
+
+            <a href="{{ url_for('admin_food') }}"
+               class="menu-item">
+
+                <span class="menu-icon">🍔</span>
+                <span>Food Management</span>
+
+            </a>
+
+
+            <a href="{{ url_for('admin_orders') }}"
+               class="menu-item">
+
+                <span class="menu-icon">📦</span>
+                <span>Orders</span>
+
+            </a>
+
+
+            <a href="{{ url_for('admin_users') }}"
+               class="menu-item active">
+
+                <span class="menu-icon">👥</span>
+                <span>Users</span>
+
+            </a>
+
+
+            <a href="{{ url_for('sales_analytics') }}"
+               class="menu-item">
+
+                <span class="menu-icon">📈</span>
+                <span>Sales Analytics</span>
+
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <a href="{{ url_for('logout') }}"
+               class="menu-item logout-item">
+
+                <span class="menu-icon">🚪</span>
+                <span>Logout</span>
+
+            </a>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- MAIN -->
+
+    <main class="main-content">
+
+
+        <header class="top-bar">
+
+            <div>
+
+                <h1>User Management</h1>
+
+                <p>
+                    Manage students and administrators registered
+                    in the Food Court system.
+                </p>
+
+            </div>
+
+
+            <div class="admin-profile">
+
+                <div class="profile-icon">
+                    👤
+                </div>
+
+                <div>
+
+                    <strong>
+                        Administrator
+                    </strong>
+
+                    <span>
+                        Admin
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- USER CONTENT -->
+
+        <section class="users-container">
+
+
+            <div class="users-header">
+
+                <div>
+
+                    <h2>
+                        Registered Users
+                    </h2>
+
+                    <p>
+                        View and manage all registered accounts.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- STAT CARDS -->
+
+            <div class="user-stats">
+
+
+                <div class="user-stat-card">
+
+                    <div class="user-stat-icon">
+                        👥
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Total Accounts
+                        </span>
+
+                        <strong>
+                            {{ users|length }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="user-stat-card">
+
+                    <div class="user-stat-icon">
+                        🎓
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Students
+                        </span>
+
+                        <strong>
+                            {{ students_count }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="user-stat-card">
+
+                    <div class="user-stat-icon">
+                        🛡️
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Administrators
+                        </span>
+
+                        <strong>
+                            {{ admins_count }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- SEARCH -->
+
+            <div class="users-toolbar">
+
+                <div class="user-search">
+
+                    <span>
+                        🔍
+                    </span>
+
+                    <input
+                        type="text"
+                        id="userSearch"
+                        placeholder="Search name, student ID or email..."
+                        autocomplete="off"
+                    >
+
+                </div>
+
+
+                <div class="user-filter-buttons">
+
+                    <button
+                        type="button"
+                        class="user-filter active"
+                        data-filter="all"
+                    >
+                        All
+                    </button>
+
+                    <button
+                        type="button"
+                        class="user-filter"
+                        data-filter="user"
+                    >
+                        Students
+                    </button>
+
+                    <button
+                        type="button"
+                        class="user-filter"
+                        data-filter="admin"
+                    >
+                        Admins
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- TABLE -->
+
+            <div class="users-table-container">
+
+                <table class="users-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>#</th>
+
+                            <th>User</th>
+
+                            <th>Student ID</th>
+
+                            <th>Email</th>
+
+                            <th>Phone</th>
+
+                            <th>Role</th>
+
+                            <th>Action</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="usersTableBody">
+
+                    {% for user in users %}
+
+                        <tr
+                            class="user-row"
+                            data-role="{{ user['role'] }}"
+                            data-search="
+                                {{ user['full_name']|lower }}
+                                {{ user['student_id']|lower }}
+                                {{ user['email']|lower }}
+                            "
+                        >
+
+                            <td>
+                                {{ loop.index }}
+                            </td>
+
+
+                            <td>
+
+                                <div class="user-name">
+
+                                    <div class="user-avatar">
+                                        {{ user['full_name'][0]|upper }}
+                                    </div>
+
+                                    <strong>
+                                        {{ user['full_name'] }}
+                                    </strong>
+
+                                </div>
+
+                            </td>
+
+
+                            <td>
+                                {{ user['student_id'] }}
+                            </td>
+
+
+                            <td>
+                                {{ user['email'] }}
+                            </td>
+
+
+                            <td>
+                                {{ user['phone'] }}
+                            </td>
+
+
+                            <td>
+
+                                {% if user['role'] == 'admin' %}
+
+                                <span class="role-badge admin">
+                                    🛡️ Admin
+                                </span>
+
+                                {% else %}
+
+                                <span class="role-badge student">
+                                    🎓 Student
+                                </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <td>
+
+                                {% if user['id'] != session['user_id'] %}
+
+                                <form
+                                    method="POST"
+                                    action="{{ url_for(
+                                        'admin_delete_user',
+                                        user_id=user['id']
+                                    ) }}"
+                                    onsubmit="return confirm(
+                                        'Delete this user account?'
+                                    );"
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="user-delete-btn"
+                                    >
+                                        🗑️ Delete
+                                    </button>
+
+                                </form>
+
+                                {% else %}
+
+                                <span class="current-account">
+                                    Current Account
+                                </span>
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+
+                {% if not users %}
+
+                <div class="no-users">
+
+                    <div>
+                        👥
+                    </div>
+
+                    <h3>
+                        No Users Found
+                    </h3>
+
+                    <p>
+                        No registered accounts are available.
+                    </p>
+
+                </div>
+
+                {% endif %}
+
+            </div>
+
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script src="{{ url_for(
+    'static',
+    filename='js/admin_users.js'
+) }}"></script>
+
+</body>
+
+</html>

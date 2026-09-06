@@ -1,0 +1,659 @@
+/* =========================================================
+   FOOD COURT - CART PAGE
+   ========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f8f3ed;
+    color: #3b2418;
+}
+
+
+/* =========================================================
+   NAVBAR
+   ========================================================= */
+
+.navbar {
+    height: 72px;
+    background: #3b2418;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 55px;
+
+    color: white;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.nav-links a {
+    color: #f8eee5;
+    text-decoration: none;
+    font-size: 15px;
+
+    transition: 0.2s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: #e8c9a8;
+}
+
+.nav-links .logout {
+    color: #f1b99a;
+}
+
+
+/* =========================================================
+   MAIN CONTAINER
+   ========================================================= */
+
+.cart-container {
+    max-width: 1250px;
+    margin: 45px auto;
+    padding: 0 25px;
+}
+
+
+/* =========================================================
+   PAGE HEADING
+   ========================================================= */
+
+.page-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 30px;
+}
+
+.page-heading h1 {
+    font-size: 34px;
+    color: #3b2418;
+    margin-bottom: 7px;
+}
+
+.page-heading p {
+    color: #806b5d;
+    font-size: 15px;
+}
+
+.continue-shopping {
+    text-decoration: none;
+    color: #70452f;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.continue-shopping:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   TWO COLUMN LAYOUT
+   ========================================================= */
+
+.cart-layout {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        390px;
+
+    gap: 30px;
+
+    align-items: start;
+}
+
+
+/* =========================================================
+   CART ITEMS
+   ========================================================= */
+
+.cart-items {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.cart-item {
+    background: white;
+
+    border-radius: 18px;
+
+    padding: 22px;
+
+    display: grid;
+
+    grid-template-columns:
+        85px
+        minmax(180px, 1fr)
+        130px
+        110px;
+
+    align-items: center;
+
+    gap: 20px;
+
+    box-shadow:
+        0 5px 20px rgba(59, 36, 24, 0.07);
+}
+
+
+/* =========================================================
+   FOOD ICON
+   ========================================================= */
+
+.food-icon {
+    width: 75px;
+    height: 75px;
+
+    background: #f5e7d8;
+
+    border-radius: 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 38px;
+}
+
+
+/* =========================================================
+   ITEM DETAILS
+   ========================================================= */
+
+.item-details h3 {
+    font-size: 18px;
+    margin-bottom: 6px;
+
+    color: #3b2418;
+}
+
+.item-details p {
+    color: #88766b;
+    font-size: 13px;
+
+    line-height: 1.4;
+
+    margin-bottom: 8px;
+}
+
+.item-category {
+    display: inline-block;
+
+    padding: 4px 9px;
+
+    border-radius: 20px;
+
+    background: #f3e5d8;
+
+    color: #70452f;
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.item-price {
+    margin-top: 9px;
+
+    color: #6b402b;
+
+    font-size: 16px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   QUANTITY
+   ========================================================= */
+
+.quantity-section {
+    text-align: center;
+}
+
+.quantity-label {
+    display: block;
+
+    font-size: 11px;
+
+    color: #9a887c;
+
+    margin-bottom: 8px;
+}
+
+.quantity-controls {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 8px;
+}
+
+.quantity-controls form {
+    margin: 0;
+}
+
+.quantity-btn {
+    width: 30px;
+    height: 30px;
+
+    border: 1px solid #dccabd;
+
+    background: #fffaf5;
+
+    color: #5a3424;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-size: 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: 0.2s;
+}
+
+.quantity-btn:hover {
+    background: #ead3c0;
+}
+
+.quantity {
+    min-width: 25px;
+
+    text-align: center;
+
+    font-weight: 700;
+
+    color: #3b2418;
+}
+
+
+/* =========================================================
+   ITEM TOTAL
+   ========================================================= */
+
+.item-total {
+    text-align: right;
+}
+
+.item-total > span {
+    display: block;
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+    color: #3b2418;
+
+    margin-bottom: 10px;
+}
+
+.remove-btn {
+    border: none;
+
+    background: transparent;
+
+    color: #a45c4d;
+
+    cursor: pointer;
+
+    font-size: 12px;
+
+    text-decoration: underline;
+}
+
+.remove-btn:hover {
+    color: #7f3327;
+}
+
+
+/* =========================================================
+   ORDER SUMMARY
+   ========================================================= */
+
+.order-summary {
+    background: #3b2418;
+
+    color: white;
+
+    border-radius: 18px;
+
+    padding: 30px;
+
+    position: sticky;
+
+    top: 25px;
+
+    box-shadow:
+        0 10px 30px rgba(59, 36, 24, 0.15);
+}
+
+.order-summary h2 {
+    font-size: 27px;
+
+    margin-bottom: 30px;
+
+    color: white;
+}
+
+
+/* =========================================================
+   SUMMARY ROW
+   ========================================================= */
+
+.summary-row {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 20px;
+
+    font-size: 16px;
+
+    color: #eadfd8;
+}
+
+.summary-row span:last-child {
+    font-weight: 600;
+
+    color: #fff;
+}
+
+
+/* =========================================================
+   DIVIDER
+   ========================================================= */
+
+.summary-divider {
+    height: 1px;
+
+    background: rgba(255, 255, 255, 0.2);
+
+    margin: 25px 0;
+}
+
+
+/* =========================================================
+   TOTAL
+   ========================================================= */
+
+.summary-total {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 28px;
+}
+
+.summary-total span {
+    font-size: 19px;
+
+    font-weight: 600;
+
+    color: white;
+}
+
+.summary-total strong {
+    font-size: 27px;
+
+    color: white;
+}
+
+
+/* =========================================================
+   CHECKOUT BUTTON
+   ========================================================= */
+
+.checkout-btn {
+    width: 100%;
+
+    min-height: 58px;
+
+    background: #f0d3b5;
+
+    color: #3b2418;
+
+    border-radius: 12px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    padding: 15px 18px;
+
+    text-decoration: none;
+
+    font-size: 16px;
+
+    font-weight: 700;
+
+    border: none;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s,
+        background 0.2s,
+        box-shadow 0.2s;
+}
+
+.checkout-btn:hover {
+    background: #f7dfc6;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 7px 18px rgba(0, 0, 0, 0.18);
+}
+
+.checkout-btn .arrow {
+    font-size: 21px;
+}
+
+
+/* =========================================================
+   CONTINUE SHOPPING
+   ========================================================= */
+
+.summary-shopping {
+    display: block;
+
+    text-align: center;
+
+    margin-top: 20px;
+
+    color: #eadfd8;
+
+    text-decoration: none;
+
+    font-size: 14px;
+}
+
+.summary-shopping:hover {
+    color: white;
+
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   EMPTY CART
+   ========================================================= */
+
+.empty-cart {
+    background: white;
+
+    border-radius: 20px;
+
+    padding: 70px 30px;
+
+    text-align: center;
+
+    box-shadow:
+        0 5px 20px rgba(59, 36, 24, 0.07);
+}
+
+.empty-icon {
+    font-size: 65px;
+
+    margin-bottom: 20px;
+}
+
+.empty-cart h2 {
+    color: #3b2418;
+
+    margin-bottom: 10px;
+}
+
+.empty-cart p {
+    color: #806b5d;
+
+    margin-bottom: 25px;
+}
+
+.browse-btn {
+    display: inline-block;
+
+    padding: 13px 25px;
+
+    border-radius: 10px;
+
+    background: #6b402b;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-weight: 600;
+}
+
+.browse-btn:hover {
+    background: #4f2e20;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+    .cart-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .order-summary {
+        position: static;
+    }
+
+}
+
+
+@media (max-width: 750px) {
+
+    .navbar {
+        padding: 0 20px;
+    }
+
+    .nav-links {
+        gap: 12px;
+    }
+
+    .nav-links a {
+        font-size: 12px;
+    }
+
+    .cart-item {
+        grid-template-columns: 70px 1fr;
+    }
+
+    .food-icon {
+        width: 65px;
+        height: 65px;
+        font-size: 30px;
+    }
+
+    .quantity-section {
+        text-align: left;
+    }
+
+    .quantity-controls {
+        justify-content: flex-start;
+    }
+
+    .item-total {
+        text-align: left;
+    }
+
+}
+
+
+@media (max-width: 550px) {
+
+    .navbar {
+        height: auto;
+
+        padding: 18px;
+
+        flex-direction: column;
+
+        gap: 15px;
+    }
+
+    .nav-links {
+        flex-wrap: wrap;
+
+        justify-content: center;
+    }
+
+    .page-heading {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 15px;
+    }
+
+    .cart-container {
+        margin-top: 25px;
+
+        padding: 0 15px;
+    }
+
+    .order-summary {
+        padding: 25px 20px;
+    }
+
+}

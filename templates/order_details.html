@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Order #{{ order['id'] }} | Food Court</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+
+            background: #f8f3ed;
+
+            color: #3b2418;
+
+            min-height: 100vh;
+        }
+
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            height: 70px;
+
+            background: #3b2418;
+
+            color: white;
+
+            padding: 0 7%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 21px;
+
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: #eadfd7;
+
+            text-decoration: none;
+
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+
+        /* ================= CONTAINER ================= */
+
+        .container {
+            width: 900px;
+
+            max-width: 92%;
+
+            margin: 40px auto;
+        }
+
+
+        /* ================= HEADER ================= */
+
+        .back {
+            display: inline-block;
+
+            margin-bottom: 18px;
+
+            color: #765747;
+
+            text-decoration: none;
+
+            font-size: 14px;
+        }
+
+        .back:hover {
+            text-decoration: underline;
+        }
+
+        .header {
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            font-size: 30px;
+
+            margin-bottom: 7px;
+        }
+
+        .header p {
+            color: #806b5d;
+
+            font-size: 14px;
+        }
+
+
+        /* ================= MAIN CARD ================= */
+
+        .card {
+            background: white;
+
+            border-radius: 18px;
+
+            padding: 28px;
+
+            margin-bottom: 20px;
+
+            box-shadow:
+                0 8px 25px rgba(59, 36, 24, 0.08);
+        }
+
+
+        /* ================= ORDER HEADER ================= */
+
+        .order-top {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            border-bottom: 1px solid #eee3dc;
+
+            padding-bottom: 20px;
+
+            margin-bottom: 20px;
+        }
+
+        .order-number {
+            font-size: 20px;
+
+            font-weight: 700;
+        }
+
+        .order-date {
+            color: #8a766a;
+
+            font-size: 12px;
+
+            margin-top: 5px;
+        }
+
+
+        /* ================= STATUS ================= */
+
+        .order-status {
+            padding: 8px 14px;
+
+            border-radius: 20px;
+
+            background: #fff0d9;
+
+            color: #a45e00;
+
+            font-size: 12px;
+
+            font-weight: 700;
+        }
+
+
+        /* ================= ITEMS ================= */
+
+        .section-title {
+            font-size: 18px;
+
+            margin-bottom: 15px;
+        }
+
+        .item {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 15px 0;
+
+            border-bottom: 1px solid #f0e8e3;
+        }
+
+        .item:last-child {
+            border-bottom: none;
+        }
+
+        .item-name {
+            font-weight: 600;
+
+            font-size: 14px;
+        }
+
+        .item-info {
+            color: #806b5d;
+
+            font-size: 12px;
+
+            margin-top: 5px;
+        }
+
+        .item-total {
+            font-weight: 700;
+
+            font-size: 14px;
+        }
+
+
+        /* ================= TOTAL ================= */
+
+        .total-row {
+            display: flex;
+
+            justify-content: space-between;
+
+            border-top: 1px solid #ddd0c7;
+
+            padding-top: 18px;
+
+            margin-top: 10px;
+        }
+
+        .total-label {
+            font-size: 18px;
+
+            font-weight: 700;
+        }
+
+        .total-amount {
+            font-size: 22px;
+
+            font-weight: 700;
+        }
+
+
+        /* ================= PAYMENT ================= */
+
+        .payment-grid {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 15px;
+        }
+
+        .payment-box {
+            border: 1px solid #e4d7ce;
+
+            border-radius: 13px;
+
+            padding: 18px;
+        }
+
+        .payment-label {
+            color: #8a766a;
+
+            font-size: 11px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 7px;
+        }
+
+        .payment-value {
+            font-size: 15px;
+
+            font-weight: 700;
+        }
+
+
+        /* ================= PAYMENT STATUS ================= */
+
+        .paid {
+            color: #287044;
+        }
+
+        .pending {
+            color: #b26700;
+        }
+
+
+        /* ================= TRANSACTION ================= */
+
+        .transaction {
+            margin-top: 15px;
+
+            background: #f8f3ed;
+
+            padding: 12px;
+
+            border-radius: 9px;
+
+            font-size: 12px;
+
+            color: #6d5a4e;
+
+            word-break: break-all;
+        }
+
+
+        /* ================= CASH MESSAGE ================= */
+
+        .cash-message {
+            margin-top: 18px;
+
+            background: #fff5e7;
+
+            border-left: 4px solid #f28c28;
+
+            padding: 14px;
+
+            border-radius: 8px;
+
+            color: #7c4d19;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+
+        /* ================= UPI MESSAGE ================= */
+
+        .upi-message {
+            margin-top: 18px;
+
+            background: #edf8f0;
+
+            border-left: 4px solid #3c9156;
+
+            padding: 14px;
+
+            border-radius: 8px;
+
+            color: #286139;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 650px) {
+
+            .navbar {
+                padding: 0 20px;
+            }
+
+            .nav-links {
+                gap: 12px;
+            }
+
+            .nav-links a:nth-child(2) {
+                display: none;
+            }
+
+            .container {
+                margin-top: 25px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .payment-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .order-top {
+                align-items: flex-start;
+
+                gap: 15px;
+
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        🍽️ Food Court
+    </div>
+
+    <div class="nav-links">
+
+        <a href="{{ url_for('user_dashboard') }}">
+            Home
+        </a>
+
+        <a href="{{ url_for('menu') }}">
+            Menu
+        </a>
+
+        <a href="{{ url_for('cart') }}">
+            Cart
+        </a>
+
+        <a href="{{ url_for('logout') }}">
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- ================= CONTENT ================= -->
+
+<div class="container">
+
+
+    <a href="{{ url_for('my_orders') }}"
+       class="back">
+
+        ← Back to My Orders
+
+    </a>
+
+
+    <div class="header">
+
+        <h1>
+            Order Details
+        </h1>
+
+        <p>
+            Thank you for ordering from Food Court
+        </p>
+
+    </div>
+
+
+    <!-- ================= ORDER CARD ================= -->
+
+    <div class="card">
+
+
+        <div class="order-top">
+
+            <div>
+
+                <div class="order-number">
+                    Order #{{ order['id'] }}
+                </div>
+
+                <div class="order-date">
+                    {{ order['order_date'] }}
+                </div>
+
+            </div>
+
+
+            <span class="order-status">
+
+                {{ order['status'] }}
+
+            </span>
+
+        </div>
+
+
+        <!-- ================= ITEMS ================= -->
+
+        <h2 class="section-title">
+            Your Items
+        </h2>
+
+
+        {% for item in items %}
+
+        <div class="item">
+
+            <div>
+
+                <div class="item-name">
+                    {{ item['food_name'] }}
+                </div>
+
+                <div class="item-info">
+                    ₹{{ "%.0f"|format(item['price']) }}
+                    ×
+                    {{ item['quantity'] }}
+                </div>
+
+            </div>
+
+
+            <div class="item-total">
+
+                ₹{{ "%.0f"|format(
+                    item['price'] * item['quantity']
+                ) }}
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+
+        <!-- ================= TOTAL ================= -->
+
+        <div class="total-row">
+
+            <span class="total-label">
+                Total
+            </span>
+
+            <span class="total-amount">
+                ₹{{ "%.0f"|format(order['total_amount']) }}
+            </span>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- ================= PAYMENT CARD ================= -->
+
+    <div class="card">
+
+        <h2 class="section-title">
+            Payment Information
+        </h2>
+
+
+        <div class="payment-grid">
+
+
+            <!-- METHOD -->
+
+            <div class="payment-box">
+
+                <div class="payment-label">
+                    Payment Method
+                </div>
+
+                <div class="payment-value">
+
+                    {% if payment
+                          and payment['payment_method'] == 'UPI' %}
+
+                        📱 UPI / Online Payment
+
+                    {% elif payment
+                          and payment['payment_method'] == 'Cash' %}
+
+                        💵 Cash at Counter
+
+                    {% else %}
+
+                        Not Available
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <!-- STATUS -->
+
+            <div class="payment-box">
+
+                <div class="payment-label">
+                    Payment Status
+                </div>
+
+                <div class="payment-value
+                    {% if payment and payment['payment_status'] == 'Paid' %}
+                        paid
+                    {% elif payment and payment['payment_status'] == 'Pending' %}
+                        pending
+                    {% endif %}
+                ">
+
+                    {% if payment
+                          and payment['payment_status'] == 'Paid' %}
+
+                        ✓ Paid
+
+                    {% elif payment
+                          and payment['payment_status'] == 'Pending' %}
+
+                        ⏳ Pending
+
+                    {% else %}
+
+                        Not Available
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- ================= TRANSACTION ================= -->
+
+        {% if payment
+              and payment['transaction_id'] %}
+
+        <div class="transaction">
+
+            <strong>
+                Transaction ID:
+            </strong>
+
+            {{ payment['transaction_id'] }}
+
+        </div>
+
+        {% endif %}
+
+
+        <!-- ================= CASH MESSAGE ================= -->
+
+        {% if payment
+              and payment['payment_method'] == 'Cash'
+              and payment['payment_status'] == 'Pending' %}
+
+        <div class="cash-message">
+
+            💵 <strong>Cash Payment</strong><br>
+
+            Please pay the exact amount at the
+            food court counter when collecting your order.
+
+        </div>
+
+        {% endif %}
+
+
+        <!-- ================= PAID MESSAGE ================= -->
+
+        {% if payment
+              and payment['payment_status'] == 'Paid' %}
+
+        <div class="upi-message">
+
+            ✓ <strong>Payment Successful</strong><br>
+
+            Your payment has been recorded successfully.
+
+        </div>
+
+        {% endif %}
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

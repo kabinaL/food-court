@@ -1,0 +1,10 @@
+@"
+__pycache__/
+*.pyc
+venv/
+.venv/
+env/
+.env
+food_court.db
+instance/
+"@ | Set-Content .gitignore

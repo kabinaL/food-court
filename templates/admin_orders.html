@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Orders | Admin</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/admin_orders.css') }}">
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <!-- =========================
+         SIDEBAR
+    ========================= -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                🍴
+            </div>
+
+            <div class="brand-text">
+                <h2>Food Court</h2>
+                <span>Admin Panel</span>
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a href="/admin-dashboard">
+
+                <span class="nav-icon">⌂</span>
+                <span>Dashboard</span>
+
+            </a>
+
+
+            <a href="/admin-food">
+
+                <span class="nav-icon">🍔</span>
+                <span>Food Management</span>
+
+            </a>
+
+
+            <a href="/admin-orders" class="active">
+
+                <span class="nav-icon">▤</span>
+                <span>Orders</span>
+
+            </a>
+
+
+            <a href="/admin-users">
+
+                <span class="nav-icon">👥</span>
+                <span>Users</span>
+
+            </a>
+
+
+            <a href="/sales-analytics">
+
+                <span class="nav-icon">📈</span>
+                <span>Sales Analytics</span>
+
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <a href="/logout" class="logout-link">
+
+                <span class="nav-icon">↪</span>
+                <span>Logout</span>
+
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================= -->
+
+    <main class="main-content">
+
+        <!-- TOP BAR -->
+
+        <div class="topbar">
+
+            <div>
+
+                <h1>Orders</h1>
+
+                <p>
+                    Manage and track customer orders
+                </p>
+
+            </div>
+
+
+            <div class="admin-profile">
+
+                <div class="admin-avatar">
+                    A
+                </div>
+
+                <div class="admin-profile-text">
+
+                    <strong>Administrator</strong>
+
+                    <span>Admin</span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             ORDERS SECTION
+        ========================= -->
+
+        <section class="orders-section">
+
+            <div class="section-header">
+
+                <div class="section-icon">
+                    🧾
+                </div>
+
+                <div>
+
+                    <h2>All Orders</h2>
+
+                    <p>
+                        View and manage food court orders
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 SEARCH AND FILTER
+            ========================= -->
+
+            <div class="filters">
+
+                <div class="search-box">
+
+                    <span>⌕</span>
+
+                    <input
+                        type="text"
+                        id="orderSearch"
+                        placeholder="Search by order ID, customer name or email..."
+                    >
+
+                </div>
+
+
+                <select
+                    id="statusFilter"
+                    class="status-filter"
+                >
+
+                    <option value="all">
+                        All Status
+                    </option>
+
+                    <option value="Placed">
+                        Placed
+                    </option>
+
+                    <option value="Preparing">
+                        Preparing
+                    </option>
+
+                    <option value="Ready">
+                        Ready
+                    </option>
+
+                    <option value="Completed">
+                        Completed
+                    </option>
+
+                    <option value="Cancelled">
+                        Cancelled
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- =========================
+                 ORDERS TABLE
+            ========================= -->
+
+            <div class="orders-card">
+
+                <table class="orders-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>#</th>
+
+                            <th>Order ID</th>
+
+                            <th>Customer</th>
+
+                            <th>Date</th>
+
+                            <th>Total</th>
+
+                            <th>Status</th>
+
+                            <th>Action</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="ordersTableBody">
+
+                        {% for order in orders %}
+
+                        <tr
+                            class="order-row"
+
+                            data-order-id="{{ order['id'] }}"
+
+                            data-customer="{{ order['full_name']|lower }} {{ order['email']|lower }}"
+
+                            data-status="{{ order['status'] }}"
+                        >
+
+                            <!-- NUMBER -->
+
+                            <td>
+
+                                <span class="row-number">
+                                    {{ loop.index }}
+                                </span>
+
+                            </td>
+
+
+                            <!-- ORDER ID -->
+
+                            <td>
+
+                                <span class="order-id">
+                                    #{{ order['id'] }}
+                                </span>
+
+                            </td>
+
+
+                            <!-- CUSTOMER -->
+
+                            <td>
+
+                                <div class="customer-info">
+
+                                    <div class="customer-avatar">
+
+                                        {{ order['full_name'][0]|upper }}
+
+                                    </div>
+
+
+                                    <div class="customer-details">
+
+                                        <strong>
+                                            {{ order['full_name'] }}
+                                        </strong>
+
+                                        <span>
+                                            {{ order['email'] }}
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+
+                            <!-- DATE -->
+
+                            <td>
+
+                                <div class="order-date">
+
+                                    {% set date_parts =
+                                        order['order_date'].split(' ')
+                                    %}
+
+                                    <span>
+                                        {{ date_parts[0] }}
+                                    </span>
+
+                                    {% if date_parts|length > 1 %}
+
+                                    <small>
+                                        {{ date_parts[1] }}
+                                    </small>
+
+                                    {% endif %}
+
+                                </div>
+
+                            </td>
+
+
+                            <!-- TOTAL -->
+
+                            <td>
+
+                                <span class="order-total">
+
+                                    ₹{{ "%.2f"|format(
+                                        order['total_amount']
+                                    ) }}
+
+                                </span>
+
+                            </td>
+
+
+                            <!-- STATUS -->
+
+                            <td>
+
+                                <span class="status-badge
+                                    {{ order['status']|lower }}">
+
+                                    <span class="status-dot"></span>
+
+                                    {{ order['status'] }}
+
+                                </span>
+
+                            </td>
+
+
+                            <!-- ACTION -->
+
+                            <td>
+
+                                <a
+                                    href="/admin-order-details/{{ order['id'] }}"
+                                    class="view-btn"
+                                >
+
+                                    <span>◉</span>
+                                    View
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+
+                <!-- NO RESULTS -->
+
+                <div
+                    id="noOrderResults"
+                    class="no-results"
+                >
+
+                    <div class="no-results-icon">
+                        🔍
+                    </div>
+
+                    <h3>
+                        No orders found
+                    </h3>
+
+                    <p>
+                        Try changing your search or status filter.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- =========================
+     JAVASCRIPT
+========================= -->
+
+<script src="{{ url_for('static', filename='js/admin_orders.js') }}"></script>
+
+</body>
+
+</html>

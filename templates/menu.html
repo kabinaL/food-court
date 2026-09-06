@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Food Court | Menu</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/menu.css') }}">
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        🍴 FOOD<span>COURT</span>
+    </div>
+
+
+    <div class="nav-links">
+
+        <a href="/user-dashboard">
+            Home
+        </a>
+
+        <a href="/menu" class="active">
+            Menu
+        </a>
+
+        <a href="/cart">
+            🛒 Cart
+        </a>
+
+        <a href="/logout" class="logout">
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =========================
+     HERO
+========================= -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <span class="hero-small">
+            CAMPUS FOOD COURT
+        </span>
+
+        <h1>
+            Hungry?
+            <br>
+            <span>Let's fix that.</span>
+        </h1>
+
+        <p>
+            Fresh, tasty and affordable food
+            made for your campus day.
+        </p>
+
+        <a href="#food-menu" class="explore-btn">
+            Explore Menu ↓
+        </a>
+
+    </div>
+
+
+
+    <div class="hero-food">
+
+        <div class="food-circle">
+
+            <div class="floating-food food-one">
+                🍔
+            </div>
+
+            <div class="floating-food food-two">
+                🍟
+            </div>
+
+            <div class="main-food">
+                🍕
+            </div>
+
+            <div class="floating-food food-three">
+                🥤
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================
+     MENU CONTENT
+========================= -->
+
+<main class="menu-container" id="food-menu">
+
+
+    <div class="section-heading">
+
+        <div>
+
+            <span class="section-label">
+                OUR MENU
+            </span>
+
+            <h2>
+                Pick your favourite
+            </h2>
+
+        </div>
+
+        <p>
+            Good food doesn't need to be complicated.
+        </p>
+
+    </div>
+
+
+
+    <!-- =========================
+         CATEGORY BUTTONS
+    ========================= -->
+
+    <div class="categories">
+
+        <button class="category-btn active"
+                data-category="All">
+            All
+        </button>
+
+
+        <button class="category-btn"
+                data-category="Fast Food">
+            🍔 Fast Food
+        </button>
+
+
+        <button class="category-btn"
+                data-category="Snacks">
+            🍟 Snacks
+        </button>
+
+
+        <button class="category-btn"
+                data-category="Drinks">
+            🥤 Drinks
+        </button>
+
+
+        <button class="category-btn"
+                data-category="South Indian">
+            🥞 South Indian
+        </button>
+
+    </div>
+
+
+
+    <!-- =========================
+         FOOD GRID
+    ========================= -->
+
+    <div class="food-grid">
+
+        {% for food in foods %}
+
+        <div class="food-card"
+             data-category="{{ food['category'] }}">
+
+
+            <!-- FOOD IMAGE -->
+
+            <div class="food-image">
+
+                <span class="popular">
+
+                    {% if loop.index <= 2 %}
+                        ★ Popular
+                    {% endif %}
+
+                </span>
+
+
+                {% if food["category"] == "Fast Food" %}
+
+                    {% if "Pizza" in food["name"] %}
+                        🍕
+                    {% else %}
+                        🍔
+                    {% endif %}
+
+
+                {% elif food["category"] == "Snacks" %}
+
+                    🍟
+
+
+                {% elif food["category"] == "Drinks" %}
+
+                    🥤
+
+
+                {% elif food["category"] == "South Indian" %}
+
+                    🥞
+
+
+                {% else %}
+
+                    🍽️
+
+                {% endif %}
+
+            </div>
+
+
+
+            <!-- FOOD INFORMATION -->
+
+            <div class="food-info">
+
+                <div class="food-category">
+                    {{ food["category"] }}
+                </div>
+
+
+                <h3>
+                    {{ food["name"] }}
+                </h3>
+
+
+                <p>
+                    {{ food["description"] }}
+                </p>
+
+
+
+                <div class="food-footer">
+
+
+                    <div class="price">
+                        ₹{{ "%.0f"|format(food["price"]) }}
+                    </div>
+
+
+                    <!-- ADD TO CART -->
+
+                    <form action="/add-to-cart/{{ food['id'] }}"
+                          method="POST">
+
+                        <button type="submit"
+                                class="add-btn">
+
+                            <span>
+                                +
+                            </span>
+
+                            Add
+
+                        </button>
+
+                    </form>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+
+
+    <!-- =========================
+         EMPTY MENU
+    ========================= -->
+
+    {% if not foods %}
+
+    <div class="empty-menu">
+
+        <div>
+            🍽️
+        </div>
+
+        <h2>
+            Nothing on the menu
+        </h2>
+
+        <p>
+            Please check again later.
+        </p>
+
+    </div>
+
+    {% endif %}
+
+
+
+    <!-- BACK BUTTON -->
+
+    <a href="/user-dashboard" class="back">
+        ← Back to Dashboard
+    </a>
+
+
+</main>
+
+
+
+<!-- JAVASCRIPT -->
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+
+</body>
+
+</html>

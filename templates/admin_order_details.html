@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Order #{{ order['id'] }} | Admin</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f8fafc;
+            color: #374151;
+        }
+
+        .admin-layout {
+            min-height: 100vh;
+            display: flex;
+        }
+
+        /* =========================
+           SIDEBAR
+        ========================= */
+
+        .sidebar {
+            width: 250px;
+            min-height: 100vh;
+            background: #1f2937;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            z-index: 10;
+        }
+
+        .brand {
+            height: 85px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid #374151;
+        }
+
+        .brand-icon {
+            width: 43px;
+            height: 43px;
+            background: #f97316;
+            border-radius: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 21px;
+        }
+
+        .brand h2 {
+            color: white;
+            font-size: 18px;
+            margin-bottom: 3px;
+        }
+
+        .brand span {
+            color: #9ca3af;
+            font-size: 12px;
+        }
+
+        /* NAVIGATION */
+
+        .sidebar-nav {
+            padding: 25px 14px;
+        }
+
+        .sidebar-nav a {
+            height: 48px;
+            padding: 0 15px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            color: #d1d5db;
+            text-decoration: none;
+            border-radius: 9px;
+            transition: 0.25s;
+        }
+
+        .sidebar-nav a:hover {
+            background: #374151;
+            color: white;
+        }
+
+        .sidebar-nav a.active {
+            background: #f97316;
+            color: white;
+        }
+
+        .nav-icon {
+            width: 22px;
+            text-align: center;
+        }
+
+        /* LOGOUT */
+
+        .sidebar-bottom {
+            margin-top: auto;
+            padding: 15px;
+            border-top: 1px solid #374151;
+        }
+
+        .logout-link {
+            height: 45px;
+            padding: 0 15px;
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            color: #d1d5db;
+            text-decoration: none;
+            border-radius: 9px;
+        }
+
+        .logout-link:hover {
+            background: #374151;
+            color: white;
+        }
+
+        /* =========================
+           MAIN CONTENT
+        ========================= */
+
+        .main-content {
+            width: calc(100% - 250px);
+            margin-left: 250px;
+            padding: 35px;
+        }
+
+        /* TOPBAR */
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .topbar h1 {
+            color: #1f2937;
+            font-size: 30px;
+            margin-bottom: 6px;
+        }
+
+        .topbar p {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .back-btn {
+            padding: 11px 17px;
+            background: white;
+            color: #374151;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.25s;
+        }
+
+        .back-btn:hover {
+            color: #f97316;
+            border-color: #f97316;
+        }
+
+        /* =========================
+           FLASH MESSAGE
+        ========================= */
+
+        .flash-message {
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            color: #c2410c;
+            padding: 13px 17px;
+            border-radius: 9px;
+            margin-bottom: 22px;
+        }
+
+        /* =========================
+           ORDER HEADER
+        ========================= */
+
+        .order-header {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+        }
+
+        .order-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .order-icon {
+            width: 55px;
+            height: 55px;
+            background: #fff7ed;
+            color: #f97316;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 25px;
+        }
+
+        .order-title h2 {
+            color: #1f2937;
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+
+        .order-title p {
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+        /* STATUS */
+
+        .current-status {
+            text-align: right;
+        }
+
+        .current-status span {
+            display: block;
+            color: #9ca3af;
+            font-size: 12px;
+            margin-bottom: 7px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 7px 13px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-badge.placed {
+            background: #eff6ff;
+            color: #2563eb;
+        }
+
+        .status-badge.preparing {
+            background: #fff7ed;
+            color: #ea580c;
+        }
+
+        .status-badge.ready {
+            background: #fefce8;
+            color: #ca8a04;
+        }
+
+        .status-badge.completed {
+            background: #f0fdf4;
+            color: #16a34a;
+        }
+
+        .status-badge.cancelled {
+            background: #fef2f2;
+            color: #dc2626;
+        }
+
+        /* =========================
+           TWO COLUMNS
+        ========================= */
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1.6fr 1fr;
+            gap: 22px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 20px 22px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .card-header h2 {
+            color: #1f2937;
+            font-size: 18px;
+        }
+
+        .card-header p {
+            color: #6b7280;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        /* =========================
+           ORDER ITEMS
+        ========================= */
+
+        .items-container {
+            padding: 5px 22px 20px;
+        }
+
+        .item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .item:last-child {
+            border-bottom: none;
+        }
+
+        .item-left {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+        }
+
+        .food-icon {
+            width: 43px;
+            height: 43px;
+            background: #fff7ed;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 19px;
+        }
+
+        .item-name {
+            color: #1f2937;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .item-quantity {
+            color: #9ca3af;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .item-price {
+            color: #1f2937;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        /* TOTAL */
+
+        .total-section {
+            padding: 18px 22px;
+            background: #fffaf5;
+            border-top: 1px solid #fed7aa;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .total-section span {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .total-section strong {
+            color: #ea580c;
+            font-size: 22px;
+        }
+
+        /* =========================
+           STUDENT DETAILS
+        ========================= */
+
+        .student-details {
+            padding: 22px;
+        }
+
+        .student-profile {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .student-avatar {
+            width: 48px;
+            height: 48px;
+            background: #fff7ed;
+            color: #ea580c;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .student-profile h3 {
+            color: #1f2937;
+            font-size: 16px;
+        }
+
+        .student-profile p {
+            color: #9ca3af;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .info-row {
+            padding: 14px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-row span {
+            display: block;
+            color: #9ca3af;
+            font-size: 11px;
+            margin-bottom: 5px;
+        }
+
+        .info-row strong {
+            color: #374151;
+            font-size: 13px;
+            word-break: break-word;
+        }
+
+        /* =========================
+           PAYMENT INFORMATION
+        ========================= */
+
+        .payment-card {
+            margin-top: 22px;
+        }
+
+        .payment-details {
+            padding: 22px;
+        }
+
+        .payment-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 13px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .payment-row:last-child {
+            border-bottom: none;
+        }
+
+        .payment-label {
+            color: #9ca3af;
+            font-size: 12px;
+        }
+
+        .payment-value {
+            color: #374151;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .payment-status {
+            padding: 6px 11px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .payment-status.paid {
+            background: #f0fdf4;
+            color: #16a34a;
+        }
+
+        .payment-status.pending {
+            background: #fff7ed;
+            color: #ea580c;
+        }
+
+        .payment-status.failed {
+            background: #fef2f2;
+            color: #dc2626;
+        }
+
+        .mark-paid-btn {
+            width: 100%;
+            padding: 13px;
+            margin-top: 18px;
+            border: none;
+            border-radius: 9px;
+            background: #e87519;
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.25s;
+        }
+
+        .mark-paid-btn:hover {
+            background: #d85f0b;
+            transform: translateY(-1px);
+        }
+
+        .cash-note {
+            margin-top: 15px;
+            padding: 12px;
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            border-radius: 8px;
+            color: #c2410c;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        /* =========================
+           STATUS UPDATE
+        ========================= */
+
+        .status-card {
+            margin-top: 22px;
+        }
+
+        .status-form {
+            padding: 22px;
+        }
+
+        .status-form label {
+            display: block;
+            color: #374151;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .status-form select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            background: white;
+            color: #374151;
+            outline: none;
+            cursor: pointer;
+            margin-bottom: 14px;
+        }
+
+        .status-form select:focus {
+            border-color: #f97316;
+        }
+
+        .update-btn {
+            width: 100%;
+            border: none;
+            border-radius: 8px;
+            background: #f97316;
+            color: white;
+            padding: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.25s;
+        }
+
+        .update-btn:hover {
+            background: #ea580c;
+            transform: translateY(-1px);
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 950px) {
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 700px) {
+
+            .sidebar {
+                width: 70px;
+            }
+
+            .brand {
+                justify-content: center;
+                padding: 15px 10px;
+            }
+
+            .brand-text {
+                display: none;
+            }
+
+            .sidebar-nav a,
+            .logout-link {
+                justify-content: center;
+                padding: 0;
+            }
+
+            .sidebar-nav a span:last-child,
+            .logout-link span:last-child {
+                display: none;
+            }
+
+            .main-content {
+                width: calc(100% - 70px);
+                margin-left: 70px;
+                padding: 20px;
+            }
+
+            .topbar {
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .order-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+
+            .current-status {
+                text-align: left;
+            }
+        }
+
+        @media (max-width: 450px) {
+
+            .main-content {
+                padding: 15px;
+            }
+
+            .topbar h1 {
+                font-size: 24px;
+            }
+
+            .order-title h2 {
+                font-size: 18px;
+            }
+
+            .back-btn {
+                padding: 9px 12px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <!-- =========================
+         SIDEBAR
+    ========================= -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                🍴
+            </div>
+
+            <div class="brand-text">
+
+                <h2>Food Court</h2>
+
+                <span>Admin Panel</span>
+
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a href="/admin-dashboard">
+
+                <span class="nav-icon">📊</span>
+
+                <span>Dashboard</span>
+
+            </a>
+
+
+            <a href="/admin-food">
+
+                <span class="nav-icon">🍔</span>
+
+                <span>Food Management</span>
+
+            </a>
+
+
+            <a href="/admin-orders" class="active">
+
+                <span class="nav-icon">🧾</span>
+
+                <span>Orders</span>
+
+            </a>
+
+
+            <a href="/admin-users">
+
+                <span class="nav-icon">👥</span>
+
+                <span>Users</span>
+
+            </a>
+
+
+            <a href="/sales-analytics">
+
+                <span class="nav-icon">📈</span>
+
+                <span>Sales Analytics</span>
+
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <a href="/logout" class="logout-link">
+
+                <span class="nav-icon">🚪</span>
+
+                <span>Logout</span>
+
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================= -->
+
+    <main class="main-content">
+
+        <!-- TOPBAR -->
+
+        <div class="topbar">
+
+            <div>
+
+                <h1>Order Details</h1>
+
+                <p>
+                    Review order information and update its status
+                </p>
+
+            </div>
+
+
+            <a href="/admin-orders" class="back-btn">
+                ← Back to Orders
+            </a>
+
+        </div>
+
+
+        <!-- FLASH MESSAGE -->
+
+        {% with messages = get_flashed_messages() %}
+
+            {% if messages %}
+
+                <div class="flash-message">
+
+                    {% for message in messages %}
+
+                        ✓ {{ message }}
+
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <!-- =========================
+             ORDER HEADER
+        ========================= -->
+
+        <section class="order-header">
+
+            <div class="order-title">
+
+                <div class="order-icon">
+                    🧾
+                </div>
+
+                <div>
+
+                    <h2>
+                        Order #{{ order['id'] }}
+                    </h2>
+
+                    <p>
+                        Placed on {{ order['order_date'] }}
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="current-status">
+
+                <span>Current Status</span>
+
+                <strong class="status-badge {{ order['status']|lower }}">
+
+                    {{ order['status'] }}
+
+                </strong>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             CONTENT GRID
+        ========================= -->
+
+        <div class="content-grid">
+
+
+            <!-- ORDER ITEMS -->
+
+            <section class="card">
+
+                <div class="card-header">
+
+                    <h2>Ordered Items</h2>
+
+                    <p>
+                        Food items included in this order
+                    </p>
+
+                </div>
+
+
+                <div class="items-container">
+
+                    {% for item in items %}
+
+                    <div class="item">
+
+                        <div class="item-left">
+
+                            <div class="food-icon">
+                                🍽️
+                            </div>
+
+                            <div>
+
+                                <div class="item-name">
+                                    {{ item['food_name'] }}
+                                </div>
+
+                                <div class="item-quantity">
+
+                                    ₹{{ "%.2f"|format(item['price']) }}
+
+                                    ×
+
+                                    {{ item['quantity'] }}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="item-price">
+
+                            ₹{{ "%.2f"|format(
+                                item['price'] * item['quantity']
+                            ) }}
+
+                        </div>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- TOTAL -->
+
+                <div class="total-section">
+
+                    <span>
+                        Total Amount
+                    </span>
+
+                    <strong>
+
+                        ₹{{ "%.2f"|format(
+                            order['total_amount']
+                        ) }}
+
+                    </strong>
+
+                </div>
+
+            </section>
+
+
+            <!-- RIGHT SIDE -->
+
+            <div>
+
+
+                <!-- STUDENT INFORMATION -->
+
+                <section class="card">
+
+                    <div class="card-header">
+
+                        <h2>Student Information</h2>
+
+                        <p>
+                            Customer details
+                        </p>
+
+                    </div>
+
+
+                    <div class="student-details">
+
+                        <div class="student-profile">
+
+                            <div class="student-avatar">
+
+                                {{ order['full_name'][0]|upper }}
+
+                            </div>
+
+                            <div>
+
+                                <h3>
+                                    {{ order['full_name'] }}
+                                </h3>
+
+                                <p>
+                                    {{ order['student_id'] }}
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="info-row">
+
+                            <span>Email</span>
+
+                            <strong>
+                                {{ order['email'] }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="info-row">
+
+                            <span>Phone</span>
+
+                            <strong>
+                                {{ order['phone'] }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="info-row">
+
+                            <span>Order Date</span>
+
+                            <strong>
+                                {{ order['order_date'] }}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =========================
+                     PAYMENT INFORMATION
+                ========================= -->
+
+                <section class="card payment-card">
+
+                    <div class="card-header">
+
+                        <h2>Payment Information</h2>
+
+                        <p>
+                            Payment details for this order
+                        </p>
+
+                    </div>
+
+
+                    <div class="payment-details">
+
+                        {% if payment %}
+
+                            <div class="payment-row">
+
+                                <span class="payment-label">
+                                    Payment Method
+                                </span>
+
+                                <strong class="payment-value">
+                                    {{ payment['payment_method'] }}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="payment-row">
+
+                                <span class="payment-label">
+                                    Payment Status
+                                </span>
+
+                                <span class="payment-status {{ payment['payment_status']|lower }}">
+
+                                    {{ payment['payment_status'] }}
+
+                                </span>
+
+                            </div>
+
+
+                            {% if payment['transaction_id'] %}
+
+                            <div class="payment-row">
+
+                                <span class="payment-label">
+                                    Transaction ID
+                                </span>
+
+                                <strong class="payment-value">
+                                    {{ payment['transaction_id'] }}
+                                </strong>
+
+                            </div>
+
+                            {% endif %}
+
+
+                            <!-- MARK CASH PAYMENT AS PAID -->
+
+                            {% if payment['payment_method'] == 'Cash'
+                                  and payment['payment_status'] == 'Pending' %}
+
+                                <form
+                                    method="POST"
+                                    action="{{ url_for(
+                                        'admin_mark_payment_paid',
+                                        order_id=order['id']
+                                    ) }}"
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="mark-paid-btn"
+                                    >
+                                        ✓ Mark Cash Payment as Paid
+                                    </button>
+
+                                </form>
+
+
+                                <div class="cash-note">
+
+                                    💵 Cash payment is still pending.
+                                    Mark it as paid after receiving the
+                                    payment at the counter.
+
+                                </div>
+
+                            {% elif payment['payment_status'] == 'Paid' %}
+
+                                <div class="cash-note"
+                                     style="background:#f0fdf4;
+                                            border-color:#bbf7d0;
+                                            color:#15803d;">
+
+                                    ✓ Payment has been successfully marked
+                                    as Paid.
+
+                                </div>
+
+                            {% endif %}
+
+                        {% else %}
+
+                            <div class="cash-note">
+
+                                ⚠ No payment information found for this order.
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                </section>
+
+
+                <!-- =========================
+                     STATUS UPDATE
+                ========================= -->
+
+                <section class="card status-card">
+
+                    <div class="card-header">
+
+                        <h2>Update Order Status</h2>
+
+                        <p>
+                            Change the current order status
+                        </p>
+
+                    </div>
+
+
+                    <form
+                        action="/admin-update-order-status/{{ order['id'] }}"
+                        method="POST"
+                        class="status-form"
+                    >
+
+                        <label for="status">
+                            Order Status
+                        </label>
+
+
+                        <select name="status" id="status">
+
+                            <option
+                                value="Placed"
+                                {% if order['status'] == 'Placed' %}
+                                    selected
+                                {% endif %}
+                            >
+                                Placed
+                            </option>
+
+
+                            <option
+                                value="Preparing"
+                                {% if order['status'] == 'Preparing' %}
+                                    selected
+                                {% endif %}
+                            >
+                                Preparing
+                            </option>
+
+
+                            <option
+                                value="Ready"
+                                {% if order['status'] == 'Ready' %}
+                                    selected
+                                {% endif %}
+                            >
+                                Ready
+                            </option>
+
+
+                            <option
+                                value="Completed"
+                                {% if order['status'] == 'Completed' %}
+                                    selected
+                                {% endif %}
+                            >
+                                Completed
+                            </option>
+
+
+                            <option
+                                value="Cancelled"
+                                {% if order['status'] == 'Cancelled' %}
+                                    selected
+                                {% endif %}
+                            >
+                                Cancelled
+                            </option>
+
+                        </select>
+
+
+                        <button
+                            type="submit"
+                            class="update-btn"
+                        >
+                            ✓ Update Status
+                        </button>
+
+                    </form>
+
+                </section>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

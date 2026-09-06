@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Food Court | Account Type</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/account_type.css') }}">
+</head>
+
+<body>
+
+    <div class="account-page">
+
+        <!-- Header -->
+        <div class="brand">
+            FOODCOURT
+        </div>
+
+
+        <!-- Main Content -->
+        <div class="account-container">
+
+            <div class="account-header">
+
+                <h1>Create an Account</h1>
+
+                <p>
+                    Choose the type of account you want to create
+                </p>
+
+            </div>
+
+
+            <!-- Account Cards -->
+            <div class="account-cards">
+
+
+                <!-- STUDENT / USER -->
+                <div class="account-card">
+
+                    <div class="account-icon">
+                        👤
+                    </div>
+
+                    <h2>Student / User</h2>
+
+                    <p>
+                        Create an account to order food, manage
+                        orders and view your account.
+                    </p>
+
+                    <!-- IMPORTANT: This must be an actual link -->
+                    <a href="{{ url_for('signup') }}"
+                       class="continue-btn user-btn">
+                        Continue →
+                    </a>
+
+                </div>
+
+
+
+                <!-- ADMINISTRATOR -->
+                <div class="account-card">
+
+                    <div class="account-icon">
+                        🛡️
+                    </div>
+
+                    <h2>Administrator</h2>
+
+                    <p>
+                        Create an administrator account to manage
+                        the food court system.
+                    </p>
+
+                    <!-- IMPORTANT: This must be an actual link -->
+                    <a href="{{ url_for('admin_signup') }}"
+                       class="continue-btn admin-btn">
+                        Continue →
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- Sign In -->
+            <div class="signin-section">
+
+                <p>
+                    Already have an account?
+
+                    <a href="{{ url_for('login') }}">
+                        Sign In
+                    </a>
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

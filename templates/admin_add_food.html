@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Add Food - Food Court Admin</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/admin_add_food.css') }}">
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="sidebar-header">
+            <div class="admin-logo">🍴</div>
+
+            <div>
+                <h2>Food Court</h2>
+                <p>Admin Panel</p>
+            </div>
+        </div>
+
+        <nav class="sidebar-menu">
+
+            <a href="{{ url_for('admin_dashboard') }}" class="menu-item">
+                <span>📊</span>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="{{ url_for('admin_food') }}" class="menu-item active">
+                <span>🍔</span>
+                <span>Food Management</span>
+            </a>
+
+            <a href="{{ url_for('admin_orders') }}" class="menu-item">
+                <span>📦</span>
+                <span>Orders</span>
+            </a>
+
+            <a href="{{ url_for('admin_users') }}" class="menu-item">
+                <span>👥</span>
+                <span>Users</span>
+            </a>
+
+            <a href="{{ url_for('sales_analytics') }}" class="menu-item">
+                <span>📈</span>
+                <span>Sales Analytics</span>
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <a href="{{ url_for('logout') }}" class="menu-item logout-item">
+                <span>🚪</span>
+                <span>Logout</span>
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <header class="top-bar">
+
+            <div>
+                <h1>Add Food</h1>
+                <p>Add a new item to your food court menu</p>
+            </div>
+
+            <div class="admin-profile">
+                <div class="profile-icon">👤</div>
+
+                <div>
+                    <strong>Administrator</strong>
+                    <span>Admin</span>
+                </div>
+            </div>
+
+        </header>
+
+
+        <!-- FORM CARD -->
+        <section class="add-food-section">
+
+            <div class="form-card">
+
+                <div class="form-header">
+                    <div class="food-icon">🍔</div>
+
+                    <div>
+                        <h2>Add New Food</h2>
+                        <p>Enter the details of the food item below.</p>
+                    </div>
+                </div>
+
+
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        <div class="flash-message">
+                            {% for message in messages %}
+                                {{ message }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+
+
+                <form method="POST"
+                      action="{{ url_for('admin_add_food') }}"
+                      class="food-form">
+
+
+                    <!-- FOOD NAME -->
+                    <div class="form-group">
+
+                        <label for="name">
+                            Food Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            placeholder="Enter food name"
+                            maxlength="100"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- DESCRIPTION -->
+                    <div class="form-group">
+
+                        <label for="description">
+                            Description
+                        </label>
+
+                        <textarea
+                            id="description"
+                            name="description"
+                            placeholder="Enter a short description"
+                            maxlength="250"
+                            required
+                        ></textarea>
+
+                        <small>
+                            Maximum 250 characters
+                        </small>
+
+                    </div>
+
+
+                    <!-- PRICE -->
+                    <div class="form-group">
+
+                        <label for="price">
+                            Price (₹)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="price"
+                            name="price"
+                            placeholder="Enter price"
+                            min="0"
+                            step="0.01"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- CATEGORY -->
+                    <div class="form-group">
+
+                        <label for="category">
+                            Category
+                        </label>
+
+                        <select
+                            id="category"
+                            name="category"
+                            required
+                        >
+
+                            <option value="">
+                                Select Category
+                            </option>
+
+                            <option value="South Indian">
+                                South Indian
+                            </option>
+
+                            <option value="Snacks">
+                                Snacks
+                            </option>
+
+                            <option value="Fast Food">
+                                Fast Food
+                            </option>
+
+                            <option value="Drinks">
+                                Drinks
+                            </option>
+
+                            <option value="Desserts">
+                                Desserts
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- AVAILABILITY -->
+                    <div class="form-group">
+
+                        <label>
+                            Availability
+                        </label>
+
+                        <div class="radio-group">
+
+                            <label class="radio-option">
+                                <input
+                                    type="radio"
+                                    name="available"
+                                    value="1"
+                                    checked
+                                >
+                                <span>Available</span>
+                            </label>
+
+                            <label class="radio-option">
+                                <input
+                                    type="radio"
+                                    name="available"
+                                    value="0"
+                                >
+                                <span>Unavailable</span>
+                            </label>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- BUTTONS -->
+                    <div class="form-actions">
+
+                        <a
+                            href="{{ url_for('admin_food') }}"
+                            class="cancel-btn"
+                        >
+                            Cancel
+                        </a>
+
+                        <button
+                            type="submit"
+                            class="submit-btn"
+                        >
+                            🍔 Add Food
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+</html>
